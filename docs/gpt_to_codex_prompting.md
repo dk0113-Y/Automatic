@@ -19,14 +19,12 @@ Rules:
 - Copy Skill invocation exactly from the selected task interface.
 - Use the selected skill for execution details.
 - Prompt shell stays compact; the selected skill owns procedure, validation details, blockers, and artifact rules.
-- Validation uses compact labels only.
 - Writes uses the task write scope or authorized output list only.
+- Validation uses compact labels: selected skill contract plus task-instance checks.
 - Do not repeat digest field values outside the digest except `archive_id`, `source_analysis_json`, and output paths.
 - For archive tasks, the digest is the only long section.
 - Final report uses compact field names only.
 - Keep prompts short.
-- Writes define task-instance write scope.
-- Validation names the selected skill contract plus task-instance checks.
 - Default Commit/push: commit and push after validation passes and only allowed files changed.
 - Block commit/push when validation fails or diff scope is outside the task allowlist.
 - Final report includes files changed, validation result, commit/push status, commit hash, push target, and remaining risks.
