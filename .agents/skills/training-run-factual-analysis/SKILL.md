@@ -14,6 +14,7 @@ description: Train-side-only factual JSON.
 | Default output | `training_results/current/current_training_run_analysis.json` |
 
 Constants:
+
 - `schema_version=1.0`
 - `report_type=training_run_factual_analysis`
 - `generated_by=codex`
@@ -22,12 +23,14 @@ Constants:
 ## 2. Contract
 
 Inputs:
+
 - `source_run_dir`
 - `run_name`
 - optional `output_report_path`
 - optional `destination_directory` only to resolve default output
 
 Directives:
+
 - Authorized write: `output_report_path` only.
 - Default output: `training_results/current/current_training_run_analysis.json`.
 - Output: compact GPT-review-facing factual JSON digest.
@@ -59,6 +62,7 @@ Directives:
 | posthoc/final_probe artifacts | Status-only; not performance evidence |
 
 posthoc/final_probe artifacts:
+
 - `logs/posthoc_selection_summary.json`
 - `logs/final_probe_summary.json`
 - `logs/final_probe.csv`
@@ -66,31 +70,37 @@ posthoc/final_probe artifacts:
 ## 4. Mode Handling
 
 Current mainline:
+
 - `train_side_only_tuning=true`
 
 Skipped posthoc/final_probe under `train_side_only_tuning=true`:
+
 - `status=skipped_train_side_only_tuning`
 - `role=not_applicable_for_train_side_tuning`
 - `missingness_treatment=not_missing`
 - Intentional absence; not missing artifacts.
 
 Unexpected posthoc/final_probe presence:
+
 - `status=unexpected_present`
 - `role=not_used_for_train_side_tuning`
 - `missingness_treatment=not_missing`
 - Presence/status only; not performance evidence.
 
 False or unknown train-side-only mode:
+
 - `train_side_only_tuning=false`: `unsupported_non_train_side_only_output`
 - `train_side_only_tuning=unknown`: `unknown_mode`
 - Do not trigger legacy metric extraction.
 
 Summary readiness:
+
 - `factual_summary_ready` is allowed when reproducibility and core train-side
   monitoring are ready, even when posthoc/final_probe are skipped under
   train-side-only mode.
 
 Allowed mode/status values:
+
 - `train_side_only_tuning`: `true`; `false`; `unknown`
 - `test_side_evaluation_status`:
   `skipped_train_side_only_tuning`; `unsupported_non_train_side_only_output`;
@@ -110,6 +120,7 @@ Allowed mode/status values:
 - `missingness_treatment`: `not_missing`; `missing`; `malformed`; `unknown`
 
 Forbidden test-side content:
+
 - No winner step, selected candidate steps, checkpoint winners, candidate
   rankings, final_probe summaries, best-vs-last summaries, held-out results,
   or test-side metrics.
@@ -125,6 +136,7 @@ Extraction order:
 6. `missingness_parseability`
 
 `reproducible_launch_status`:
+
 - `reproducible_launch_confirmed`
 - `reproducible_launch_not_confirmed`
 - `reproducible_launch_contradictory`
@@ -132,6 +144,7 @@ Extraction order:
 - `reproducibility_unverified`
 
 `reproducible_launch`:
+
 - `contract_verdict`
 - strict reproducibility status
 - deterministic algorithm status
@@ -143,16 +156,19 @@ Extraction order:
 - sanitized source branch/commit when available
 
 `configuration_and_runtime`:
+
 - Compact comparability/runtime summary: steps/episodes, budget, epsilon,
   replay/learner/update, reward, map/eval, mode/test-side status, skipped
   reason, device, duration, sanitized git identity, backend status, seed status.
 
 `missingness_parseability`:
+
 - Compact statuses: found/missing files, parse failures, malformed JSON,
   missing columns, empty CSVs, unverified items, skipped train-side-only
   artifacts, unexpected test-side presence, scope-skipped artifacts, sufficiency.
 
 `factual_summary_status`:
+
 - `factual_summary_ready`
 - `partial_factual_summary`
 - `missing_core_training_monitoring`
@@ -161,6 +177,7 @@ Extraction order:
 - `parse_failed`
 
 `train_side_monitoring`:
+
 - `row_counts`: train step rows; train episode rows; empty CSV status; counts.
 - `parseability`: readable/malformed files; NaN/nonfinite handling.
 - `endpoint_metrics`: `reward`; `coverage`; `success_rate`;
@@ -194,6 +211,7 @@ Extraction order:
 ## 6. JSON Schema And Density Contract
 
 Required top-level keys:
+
 - `schema_version`
 - `report_type`
 - `generated_by`
@@ -215,6 +233,7 @@ Required top-level keys:
 - `tuning_recommendation_provided`
 
 Required `train_side_monitoring` keys:
+
 - `row_counts`
 - `parseability`
 - `endpoint_metrics`
@@ -240,6 +259,7 @@ Density allowlist:
 | Presence/parse/status metadata | Plots; trajectories; checkpoints; model weights |
 
 Field density rules:
+
 - `files_inspected`: compact artifact-role map only.
   Include artifact label, presence, parse status, evidence role.
 - `commands_run`: compact command metadata only.
@@ -305,6 +325,7 @@ Field density rules:
 ## 9. Final Report
 
 Report compact fields:
+
 - `output_report_path`
 - `run_name`
 - `source_run_dir_label`
