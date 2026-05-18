@@ -18,7 +18,7 @@ Limits:
 | Field | Value |
 | --- | --- |
 | current_train_side_reference_baseline | `stable_epsend004_budget500k_decay240k_minreplay8000_seed0_20260511_195904` |
-| basis | Archived GPT review for `stable_epsend004...` recorded `prior_validation_status: supported` and updated epsend004 as the current train-side reference baseline. Later archived GPT reviews retained epsend004 after refuting epsend0035, epsdecay300k, revisit012, turn006, lr75e5, and terminal22, after partially supporting bs256 without a baseline update, after partially supporting the bounded learner-update comparison without a baseline update, and after partially supporting updates1_info32 without a baseline update. |
+| basis | Archived GPT review for `stable_epsend004...` recorded `prior_validation_status: supported` and updated epsend004 as the current train-side reference baseline. Later archived GPT reviews retained epsend004 after refuting epsend0035, epsdecay300k, revisit012, turn006, lr75e5, terminal22, and timeout10, after partially supporting bs256 without a baseline update, after partially supporting the bounded learner-update comparison without a baseline update, and after partially supporting updates1_info32 without a baseline update. |
 | scope | `single_seed_train_side_reference_only` |
 | caveat | Current reference baseline is not a global optimum, tuning completion claim, paper-level conclusion, or cross-seed conclusion. |
 
@@ -48,6 +48,7 @@ Limits:
 | `stable_bs256_bounded_learner_update_comparison_20260515` | `partially_supported` | epsend004 retained. | Recommended next run name: `stable_updates1_info32_epsend004_budget500k_decay240k_minreplay8000_seed0`. |
 | `stable_updates1_info32_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_122158` | `partially_supported` | epsend004 retained; updates1_info32 recorded as a strong candidate with baseline unchanged. | Recommended next run name: `stable_updates1_info32_terminal22_epsend004_budget500k_decay240k_minreplay8000_seed0`. |
 | `stable_updates1_info32_terminal22_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_165918` | `refuted` | epsend004 retained; `RewardTerminalBonus=22` on updates1_info32 was refuted. | Recommended next run name: `stable_updates1_info32_timeout10_epsend004_budget500k_decay240k_minreplay8000_seed0`. |
+| `stable_updates1_info32_timeout10_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_201806` | `refuted` | epsend004 retained; `RewardTimeoutPenalty=10` on updates1_info32 was refuted. | Recommended next run name: `stable_updates1_info31_epsend004_budget500k_decay240k_minreplay8000_seed0`. |
 
 ## 5. Refuted Directions
 
@@ -61,6 +62,7 @@ Limits:
 | RewardTurnPenaltyScale increase to 0.06 under epsend004 core | Refuted by `stable_turn006...`; epsend004 retained. |
 | LearningRate reduction to 0.000075 under epsend004 core | Refuted by `stable_lr75e5...`; epsend004 retained. |
 | `RewardTerminalBonus=22` on updates1_info32 strong-candidate core | Refuted by `stable_updates1_info32_terminal22_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_165918`; epsend004 retained and terminal22 did not update the reference baseline. |
+| `RewardTimeoutPenalty=10` on updates1_info32 strong-candidate core | Refuted by `stable_updates1_info32_timeout10_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_201806`; epsend004 retained and timeout10 did not update the reference baseline. |
 
 Notes:
 - Exploration schedule slicing should not remain a primary direction unless new current evidence supports revisiting it.
@@ -83,6 +85,7 @@ Notes:
 | Keep epsend004 as reference after bounded learner-update comparison | Retained by archived GPT review for `stable_bs256_bounded_learner_update_comparison_20260515`; Candidate B / `LearnerUpdatesPerIter=1` was the strongest mechanism candidate but did not update the baseline. |
 | Keep epsend004 as reference after updates1_info32 | Retained by archived GPT review for `stable_updates1_info32_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_122158`; updates1_info32 is recorded as a strong candidate and next-run base, not the accepted reference baseline. |
 | Keep epsend004 as reference after terminal22 | Retained by archived GPT review for `stable_updates1_info32_terminal22_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_165918`; terminal22 does not update the reference baseline. |
+| Keep epsend004 as reference after timeout10 | Retained by archived GPT review for `stable_updates1_info32_timeout10_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_201806`; timeout10 does not update the reference baseline. |
 
 ## 7. Open Uncertainties
 
@@ -93,6 +96,7 @@ Notes:
 | Whether `RewardInfoScale` can restore coverage, information gain, and success_rate on top of the efficient `LearnerUpdatesPerIter=1` structure without reintroducing high revisit, stall, turn burden, or timeout. | Open in archived GPT review after bounded learner-update comparison. |
 | whether increasing terminal completion reward can recover success_rate and timeout while retaining updates1_info32 reward and path-efficiency advantages. | Open in archived GPT review after updates1_info32. |
 | Whether increasing RewardTimeoutPenalty from 8 to 10 while restoring RewardTerminalBonus=20 can directly reduce timeout and improve terminal completion without losing updates1_info32 reward, information-gain, and path-efficiency advantages. | Open in archived GPT review after terminal22. |
+| Whether reducing RewardInfoScale from 3.2 to 3.1 while restoring RewardTimeoutPenalty=8 can improve the information-gain versus terminal-completion trade-off on the LearnerUpdatesPerIter=1 core. | Open in archived GPT review after timeout10. |
 | Whether posthoc/final_probe mismatch indicates a stability issue requiring later focused review. | Open as context only; not baseline decision authority by itself. |
 | Whether learner/update dynamics such as learning rate or target update cadence should be considered if light reward shaping is weaker than epsend004. | Mentioned as conditional future consideration in archived GPT review after revisit012. |
 | Cross-seed robustness. | Not evaluated by this single-seed tuning map and not the default blocker. |
@@ -105,6 +109,7 @@ Notes:
 | `reward-function information-gain knob on top of validated lower update-to-data ratio` with `RewardInfoScale: 3.0 -> 3.2; keep LearnerUpdatesPerIter=1` | Recommended next surface after the bounded learner-update comparison; represented by `recommended_next_run_name: stable_updates1_info32_epsend004_budget500k_decay240k_minreplay8000_seed0`. |
 | `reward-function terminal-completion knob on top of updates1_info32 strong candidate` with `RewardTerminalBonus: 20 -> 22; keep RewardInfoScale=3.2 and LearnerUpdatesPerIter=1` | Recommended next surface after updates1_info32; represented by `recommended_next_run_name: stable_updates1_info32_terminal22_epsend004_budget500k_decay240k_minreplay8000_seed0`. |
 | `reward-function timeout-completion knob on top of updates1_info32 strong candidate` with `RewardTimeoutPenalty: 8 -> 10; restore RewardTerminalBonus=20; keep RewardInfoScale=3.2 and LearnerUpdatesPerIter=1` | Recommended next surface after terminal22; represented by `recommended_next_run_name: stable_updates1_info32_timeout10_epsend004_budget500k_decay240k_minreplay8000_seed0`. |
+| `reward-function information-completion balance on top of LearnerUpdatesPerIter=1` with `RewardInfoScale: 3.2 -> 3.1; restore RewardTimeoutPenalty=8; keep RewardTerminalBonus=20 and LearnerUpdatesPerIter=1` | Recommended next surface after timeout10; represented by `recommended_next_run_name: stable_updates1_info31_epsend004_budget500k_decay240k_minreplay8000_seed0`. |
 | Systematic multi-run design or method_redesign_discussion_only | Conditional future surface only if all three bounded learner/update candidates remain weaker than epsend004. |
 
 `stable_bs192_epsend004_budget500k_decay240k_minreplay8000_seed0`, `stable_updates1_epsend004_budget500k_decay240k_minreplay8000_seed0`, and `stable_target2000_epsend004_budget500k_decay240k_minreplay8000_seed0` are recorded only as recommended next run names. They are not summarized as archived results unless they become present as archived entries in `history_index.json`.
