@@ -27,8 +27,6 @@ Use repository-relative labels in reusable docs where possible. Keep private/loc
 | Learning algorithm | Double DQN with n-step transitions and uniform replay. |
 | Formal protocol | `formal_posthoc_trainselect_v1`; current stable launcher uses train-side-only tuning, so posthoc/final_probe outputs are status-only in current factual reports. |
 
-Legacy near/mid/token and frontier-token paths are not the current method mainline.
-
 ## 4. Training Execution Pipeline
 
 1. `scripts/launch_formal_train_stable.ps1` starts `train_q_agent.py`.
