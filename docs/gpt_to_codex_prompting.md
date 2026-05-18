@@ -18,6 +18,12 @@ Include only these fields:
 Rules:
 - Copy Skill invocation exactly from the selected task interface.
 - Use the selected skill for execution details.
+- Prompt shell stays compact; the selected skill owns procedure, validation details, blockers, and artifact rules.
+- Validation uses compact labels only.
+- Writes uses the task write scope or authorized output list only.
+- Do not repeat digest field values outside the digest except `archive_id`, `source_analysis_json`, and output paths.
+- For archive tasks, the digest is the only long section.
+- Final report uses compact field names only.
 - Keep prompts short.
 - Writes define task-instance write scope.
 - Validation names the selected skill contract plus task-instance checks.
@@ -31,6 +37,7 @@ When GPT outputs a Codex prompt, output exactly one `text` fenced block and no p
 
 Inside that block:
 - Keep the Codex prompt operational only.
+- Use the fixed field order from this document.
 - Do not use nested fenced code blocks.
 - Do not include literal triple-backtick sequences.
 - Write shell and PowerShell commands as indented plain text.
@@ -39,6 +46,19 @@ Inside that block:
 - For digest tasks, write command lines as indented plain text inside the digest.
 
 ## 3. Task Interfaces
+
+Prompt skeleton:
+- Task title
+- Task type
+- Skill invocation
+- Working context
+- Inputs
+- BEGIN_TUNING_REVIEW_MD_DIGEST block only for archive tasks
+- Outputs
+- Writes
+- Validation
+- Commit/push
+- Final report
 
 ### 3.1 training_run_factual_analysis_task
 
