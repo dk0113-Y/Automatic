@@ -1,21 +1,21 @@
 ---
 name: training-analysis-archive
-description: Archive paired training-analysis records into Automatic_2 history. For single-run archives, preserve Codex factual analysis JSON and a GPT-provided tuning_review.md digest, validate baseline and tuning-decision fields, update history_index.json, sync tuning_map.md from GPT fields only, and never reanalyze training outputs or provide tuning decisions.
+description: Archive single-run training-analysis records into Automatic_2 history. Preserve Codex factual analysis JSON and GPT-provided tuning_review.md digest, validate baseline and tuning-decision fields, update history_index.json, sync tuning_map.md from GPT fields only, and never reanalyze training outputs or provide tuning decisions.
 ---
 
 # Training Analysis Archive
 
 ## 1. Contract
 
-Archive paired training-analysis records into `Automatic_2` history.
+Archive one single-run factual analysis JSON with one GPT-provided `tuning_review.md` digest.
 
 Codex owns:
 - Preserve Codex factual JSON.
 - Preserve GPT `tuning_review.md` digest.
-- Validate digest fields, enums, headings, markers, and command format.
-- Write archive files.
+- Validate digest markers, headings, fields, enums, status semantics, and command format.
+- Write the archive pair.
 - Update `training_results/history/history_index.json`.
-- Update `training_results/history/tuning_map.md` from GPT-provided fields only.
+- Sync `training_results/history/tuning_map.md` from GPT digest fields only.
 
 Codex must not:
 - Reanalyze training outputs.
@@ -30,20 +30,15 @@ Codex must not:
 
 | Field | Required | Contract |
 | --- | --- | --- |
-| `archive_type` | yes | `single_run` or `multi_run`. |
+| `archive_type` | yes | `single_run` only. |
 | `archive_id` | yes | Unique history archive id. |
-| `source_analysis_json` | yes | Path or supplied JSON object. |
-| `tuning_review_md_digest` | `single_run` | GPT digest between `BEGIN_TUNING_REVIEW_MD_DIGEST` and `END_TUNING_REVIEW_MD_DIGEST`. |
+| `source_analysis_json` | yes | Path or supplied JSON object; source `report_type` must be `training_run_factual_analysis`. |
+| `tuning_review_md_digest` | yes | GPT digest between `BEGIN_TUNING_REVIEW_MD_DIGEST` and `END_TUNING_REVIEW_MD_DIGEST`. |
 | `history_index_path` | no | Default: `training_results/history/history_index.json`. |
 | `tuning_map_path` | no | Default: `training_results/history/tuning_map.md`. |
 
-Single-run:
-- Source `report_type` must be `training_run_factual_analysis`.
-- Expected current source path: `training_results/current/current_training_run_analysis.json`.
-
-Multi-run:
-- Unchanged; pending separate alignment.
-- Do not expand multi-run logic in this skill.
+Expected current source path:
+- `training_results/current/current_training_run_analysis.json`
 
 ## 3. Digest Contract
 
@@ -54,7 +49,7 @@ Marker rules:
 | `BEGIN_TUNING_REVIEW_MD_DIGEST` exists | yes |
 | `END_TUNING_REVIEW_MD_DIGEST` exists | yes |
 | Markers are on own unindented lines | yes |
-| Exactly one digest block | yes, unless explicitly authorized |
+| Exactly one digest block | yes |
 | Digest is not wrapped in a fenced code block | yes |
 | Literal triple-backtick sequence inside digest | no |
 
@@ -87,13 +82,13 @@ Enum validation:
 
 | Field | Allowed values |
 | --- | --- |
-| `recommendation_type` | `next_run_plan`, `hold_current_baseline`, `requires_more_evidence`, `repeat_or_repair_run`, `multi_run_comparison_needed`, `method_redesign_discussion_only` |
+| `recommendation_type` | `next_run_plan`, `hold_current_baseline`, `requires_more_evidence`, `repeat_or_repair_run`, `method_redesign_discussion_only` |
 | `prior_validation_status`, `validation_status` | `supported`, `partially_supported`, `refuted`, `inconclusive`, `not_applicable`, `blocked_by_evidence_gate` |
 | `baseline_update_status` | `updated`, `unchanged`, `unresolved` |
 | `baseline_scope` | `single_seed_train_side_reference_only` |
 
 Command validation when `recommendation_type = next_run_plan`:
-- `command` field contains one launcher command line as plain text or indented plain text.
+- `command` contains one launcher command line as plain text or indented plain text.
 - Command starts with `.\scripts\launch_formal_train_stable.ps1`.
 - Command does not include `cd`, local absolute paths, working-directory placeholders, or literal triple-backtick sequences.
 - Command is not stored in `history_index.json`.
@@ -106,7 +101,7 @@ Preservation rules:
 
 ## 4. Archive Writes
 
-Single-run output allowlist:
+Output allowlist:
 - `training_results/history/single_runs/<archive_id>/training_run_analysis.json`
 - `training_results/history/single_runs/<archive_id>/tuning_review.md`
 - `training_results/history/history_index.json`
@@ -129,11 +124,11 @@ Execution steps:
 3. Parse `source_analysis_json`.
 4. Validate source `report_type`.
 5. Extract digest marker body.
-6. Validate digest headings, fields, enums, and command.
+6. Validate digest headings, fields, enums, status semantics, and command.
 7. Create archive directory.
 8. Write preserved `training_run_analysis.json`.
 9. Write `tuning_review.md` from marker body only.
-10. Append compact `history_index` entry.
+10. Append compact `history_index.json` entry.
 11. Sync `tuning_map.md` from GPT digest fields only.
 12. Validate diff scope and forbidden artifacts.
 13. Report result.
@@ -173,6 +168,7 @@ Single-run entry fields:
 | `recommended_next_run_name` | GPT digest field |
 | `validation.source_analysis_json_parse` | `passed` |
 | `validation.tuning_review_md_digest_validation` | `passed` |
+| `validation.single_run_status_semantics` | `passed` |
 | `validation.no_training_repo_modification` | `true` |
 | `validation.no_source_run_output_modification` | `true` |
 | `validation.no_forbidden_artifacts_copied` | `true` |
@@ -191,7 +187,7 @@ Index compactness:
 - Do not infer `baseline_update_status`.
 - Do not infer `validation_status`.
 - Do not infer `selected_next_surface`.
-- Do not create new tuning recommendations.
+- Do not create tuning recommendations.
 - Do not add conclusions not present in GPT digest.
 
 Allowed `tuning_map.md` updates:
@@ -213,6 +209,10 @@ Allowed `tuning_map.md` updates:
 - No global optimum, cross-seed superiority, paper-level superiority, or tuning completion claims.
 - Keep `tuning_map.md` as navigation summary only, not decision authority.
 
+Tracked history payloads:
+- Use repository-relative paths only.
+- Store no private absolute paths.
+
 ## 6. Validation And Blockers
 
 Required validation:
@@ -228,28 +228,22 @@ Required validation:
 - `digest_command_check`
 - `source_analysis_preserved`
 - `tuning_review_md_digest_preserved`
-- `history_index_schema_and_entry_check`
-- `tuning_map_sync_check`
-- `path_sanitization`
-- `no_archive_manifest`
-- `no_forbidden_artifacts_copied`
-- `no_codex_tuning_decision`
+- `history_index_update`
+- `tuning_map_sync`
 - `diff_scope_check`
-- `git_diff_check`
-- `git_diff_cached_check`
 
 Blocker statuses:
 - `blocked_insufficient_input`
+- `archive_id_conflict`
+- `invalid_archive_type`: Block when `archive_type` is not `single_run`.
 - `parse_failed`
 - `digest_validation_failed`
-- `archive_id_conflict`
-- `invalid_archive_type`
+- `single_run_status_semantics_failed`: Block when `prior_validation_status` stores a previous archived run's status or differs from `validation_status`.
 - `forbidden_scope_detected`
 - `history_index_update_failed`
 - `tuning_map_update_failed`
 - `baseline_field_missing`
 - `digest_baseline_contract_failed`
-- `single_run_status_semantics_failed`: Block when a single-run digest uses `prior_validation_status` to store a previous archived run's status or when `prior_validation_status` differs from `validation_status`.
 
 Forbidden actions:
 - No training-output reanalysis.
@@ -259,10 +253,13 @@ Forbidden actions:
 - No `archive_manifest.json`.
 - No tuning recommendations by Codex.
 - No next hyperparameters invented by Codex.
+- No baseline inference by Codex.
+- No selected surface inference by Codex.
 - No accepted-baseline decision by Codex.
 - No stop/continue/branch decision by Codex.
 - No method-level or paper-level conclusion.
 - No rewriting GPT digest meaning.
+- No private absolute paths in tracked history payloads.
 
 ## 7. Final Report
 
@@ -274,6 +271,7 @@ Report fields:
 - `tuning_map_path`
 - `source_analysis_preserved`
 - `tuning_review_md_digest_preserved`
+- `single_run_status_semantics_check`
 - `digest_validation_result`
 - `markers_excluded_from_tuning_review_md`
 - `history_index_updated`
