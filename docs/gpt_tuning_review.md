@@ -125,6 +125,15 @@ Use exactly these Chinese user-facing sections:
 6. 下一轮训练命令
 7. 边界与风险
 
+Output density:
+- Start directly with section 1 unless the user explicitly requests a test preface.
+- Use field-first wording.
+- Keep each section decision-focused.
+- Do not repeat the same metric comparison in multiple sections unless it supports a different decision.
+- Keep mechanism diagnosis compact: state metric pattern, mechanism interpretation, and uncertainty.
+- Keep boundary section compact: evidence boundary, baseline boundary, engineering boundary, and next-run risk.
+- Rigor comes from admissible evidence, correct comparison targets, explicit uncertainty, and testable hypotheses, not long prose.
+
 Each output must explicitly include:
 - `recommendation_type`
 - `prior_validation_status` or `validation_status`
