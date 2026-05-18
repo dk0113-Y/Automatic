@@ -89,4 +89,6 @@ Use this line exactly; do not add digest field repetitions, expanded enum checks
 
 Digest block rule: Include the supplied digest between `BEGIN_TUNING_REVIEW_MD_DIGEST` and `END_TUNING_REVIEW_MD_DIGEST` markers. Place each marker on its own unindented line.
 
+Digest status rule: For single-run archive digests, `prior_validation_status` records the current GPT review's validation of the immediately preceding hypothesis. It must match `validation_status`. Do not use it to store the previous archived run's validation status.
+
 Digest preservation rule: Codex preserves the GPT-owned digest fields and command without reanalysis or meaning changes.

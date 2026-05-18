@@ -78,6 +78,11 @@ Required fields:
 | Next Action | `target_uncertainty`, `next_hypothesis`, `selected_next_surface`, `parameter_change`, `rationale`, `command`, `expected_validation_focus` |
 | Boundaries | `reference_baseline_note`, `evidence_boundary`, `redesign_boundary` |
 
+Single-run status semantics:
+- `prior_validation_status` records the current GPT review's validation of the immediately preceding hypothesis.
+- `prior_validation_status` must match `validation_status`.
+- Do not use `prior_validation_status` to store the previous archived run's validation status.
+
 Enum validation:
 
 | Field | Allowed values |
@@ -219,6 +224,7 @@ Required validation:
 - `digest_heading_check`
 - `digest_required_field_check`
 - `digest_enum_check`
+- `single_run_status_semantics_check`
 - `digest_command_check`
 - `source_analysis_preserved`
 - `tuning_review_md_digest_preserved`
@@ -243,6 +249,7 @@ Blocker statuses:
 - `tuning_map_update_failed`
 - `baseline_field_missing`
 - `digest_baseline_contract_failed`
+- `single_run_status_semantics_failed`: Block when a single-run digest uses `prior_validation_status` to store a previous archived run's status or when `prior_validation_status` differs from `validation_status`.
 
 Forbidden actions:
 - No training-output reanalysis.
