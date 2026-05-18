@@ -2,14 +2,14 @@
   "schema_version": "1.0",
   "report_type": "training_run_factual_analysis",
   "generated_by": "codex",
-  "source_run_dir": "source_training_repo:outputs/stable_updates1_info32_terminal22_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_165918",
+  "source_run_dir": "source_training_repo:outputs/stable_updates1_info32_timeout10_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_201806",
   "source_run_dir_identity": {
-    "provided_source_run_dir_sanitized": "source_training_repo:outputs/stable_updates1_info32_terminal22_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_165918",
-    "basename": "stable_updates1_info32_terminal22_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_165918",
+    "provided_source_run_dir_sanitized": "source_training_repo:outputs/stable_updates1_info32_timeout10_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_201806",
+    "basename": "stable_updates1_info32_timeout10_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_201806",
     "run_name_matches_basename": true,
     "run_name_starts_with_expected_prefix": true
   },
-  "run_name": "stable_updates1_info32_terminal22_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_165918",
+  "run_name": "stable_updates1_info32_timeout10_epsend004_budget500k_decay240k_minreplay8000_seed0_20260517_201806",
   "files_inspected": [
     "logs/config_snapshot.json",
     "logs/metric_snapshot.json",
@@ -110,7 +110,7 @@
         "fixed_model_select_seed_base": 20262323
       },
       "train_episode_seed_policy_present": true,
-      "final_probe_seed_policy_present_status_only": true
+      "eval_seed_policy_present_status_only": true
     },
     "requested_device": "cuda",
     "actual_device": "cuda:0",
@@ -147,11 +147,11 @@
   "train_side_monitoring": {
     "row_counts": {
       "train_steps_rows": 992,
-      "train_episode_rows": 1098,
+      "train_episode_rows": 1121,
       "train_steps_empty": false,
       "train_episodes_empty": false,
       "parsed_train_steps_count": 992,
-      "parsed_train_episodes_count": 1098
+      "parsed_train_episodes_count": 1121
     },
     "parseability": {
       "train_steps_csv_readable": true,
@@ -165,22 +165,22 @@
       "source": "logs/train_steps.csv",
       "env_steps": 500000,
       "learner_steps": 30750,
-      "reward": 154.377456665,
-      "coverage": 0.9286240935,
-      "success_rate": 0.7599999905,
-      "episode_length": 362.9100036621,
-      "repeat_visit_ratio": 0.2061417699,
-      "timeout": 0.2399999946
+      "reward": 156.3464355469,
+      "coverage": 0.9385010004,
+      "success_rate": 0.7799999714,
+      "episode_length": 364.9800109863,
+      "repeat_visit_ratio": 0.1817706525,
+      "timeout": 0.2199999988
     },
     "initial_to_endpoint_delta": {
       "source": "logs/train_steps.csv first parsed row to endpoint recent_train row",
       "start_env_steps": 4512.0,
       "end_env_steps": 500000.0,
-      "reward_delta": 140.2558298111,
-      "coverage_delta": 0.4758240879,
-      "success_rate_delta": 0.7599999905,
-      "episode_length_delta": -237.0899963379,
-      "repeat_visit_ratio_delta": -0.4206706882
+      "reward_delta": 144.2248086929,
+      "coverage_delta": 0.4857009947,
+      "success_rate_delta": 0.7799999714,
+      "episode_length_delta": -235.0199890137,
+      "repeat_visit_ratio_delta": -0.4450418055
     },
     "late_stage_delta": {
       "source": "metric_snapshot.training_dynamics_summary.phase_slope_summary.late",
@@ -188,70 +188,70 @@
       "start_env_steps": 335008.0,
       "end_env_steps": 500000.0,
       "slope_per_1000_env_steps": {
-        "reward": 0.0840890864,
-        "coverage": 8.45869e-05,
-        "success_rate": 0.0011275389,
-        "episode_length": -0.4802427523,
-        "repeat_visit_ratio": -0.0004872768,
-        "stall_trigger_count": -0.409512906,
-        "zero_info_step_count": -0.4901672325,
-        "turn_180_count": -0.0580740498,
-        "recent_revisit_penalty_sum": 0.011129849,
-        "terminal_bonus_sum": 0.0248058565
+        "reward": 0.0224265381,
+        "coverage": 4.66884e-05,
+        "success_rate": -8.67092e-05,
+        "episode_length": -0.0503585568,
+        "repeat_visit_ratio": -0.0001445918,
+        "stall_trigger_count": -0.0266142766,
+        "zero_info_step_count": -0.053128963,
+        "turn_180_count": -0.0434951681,
+        "recent_revisit_penalty_sum": 0.0072139277,
+        "terminal_bonus_sum": -0.0017341861
       },
       "interpretation_boundary": "slope values are train-side diagnostics only, not a tuning judgement"
     },
     "key_behavior_diagnostics": {
-      "zero_info": 206.3999938965,
-      "recent_revisit": 42.25,
-      "stall": 164.5899963379,
-      "turn_ge_90": 128.8099975586,
-      "turn_135": 29.3299999237,
-      "turn_180": 27.1200008392,
-      "timeout_flag": 0.2399999946,
-      "turn_penalty_weight_sum": 70.7933349609
+      "zero_info": 204.9299926758,
+      "recent_revisit": 27.4799995422,
+      "stall": 158.9799957275,
+      "turn_ge_90": 111.7300033569,
+      "turn_135": 25.7199993134,
+      "turn_180": 17.5,
+      "timeout_flag": 0.2199999988,
+      "turn_penalty_weight_sum": 57.4833297729
     },
     "derived_exploration_efficiency": {
-      "coverage_gain_per_step": 0.0032386435,
-      "weighted_info_gain_per_step": 0.1692297608,
-      "zero_info_rate": 0.4619833231,
-      "recent_revisit_rate": 0.0926087201,
-      "stall_rate": 0.3420942426,
-      "turn_burden_rate": 0.1733605266,
-      "timeout_rate": 0.2399999946,
+      "coverage_gain_per_step": 0.00317169,
+      "weighted_info_gain_per_step": 0.1647136062,
+      "zero_info_rate": 0.4682990611,
+      "recent_revisit_rate": 0.0691347495,
+      "stall_rate": 0.3399012387,
+      "turn_burden_rate": 0.1501743048,
+      "timeout_rate": 0.2199999988,
       "metric_role": "diagnostic_only",
       "evidence_role": "not_standalone_superiority_evidence"
     },
     "reward_breakdown": {
-      "info_reward_sum": 154.6003112793,
-      "step_penalty_sum": -7.2582001686,
-      "recent_revisit_penalty_sum": -4.2249999046,
-      "turn_penalty_sum": -3.5396664143,
-      "timeout_penalty_sum": -1.9199999571,
-      "terminal_bonus_sum": 16.7199993134
+      "info_reward_sum": 155.8681945801,
+      "step_penalty_sum": -7.2995996475,
+      "recent_revisit_penalty_sum": -2.7479999065,
+      "turn_penalty_sum": -2.8741662502,
+      "timeout_penalty_sum": -2.2000000477,
+      "terminal_bonus_sum": 15.6000003815
     },
     "reward_event_summary": {
-      "delta_empty_sum": 1435.1899414062,
-      "delta_obstacle_sum": 330.3800048828,
-      "empty_info_gain_sum": 45.6835174561,
-      "obstacle_info_gain_sum": 10.5163221359,
-      "weighted_obstacle_info_gain_sum": 2.629080534,
-      "weighted_info_gain_sum": 48.3125915527,
-      "obstacle_info_contribution_ratio": 0.0544180907,
-      "recent_revisit_trigger_count": 42.25,
-      "stall_trigger_count": 164.5899963379,
-      "zero_info_step_count": 206.3999938965,
-      "turn_ge_90_count": 128.8099975586,
-      "turn_135_count": 29.3299999237,
-      "turn_180_count": 27.1200008392,
-      "timeout_flag": 0.2399999946
+      "delta_empty_sum": 1446.1500244141,
+      "delta_obstacle_sum": 336.3299865723,
+      "empty_info_gain_sum": 46.0323867798,
+      "obstacle_info_gain_sum": 10.7057161331,
+      "weighted_obstacle_info_gain_sum": 2.6764290333,
+      "weighted_info_gain_sum": 48.7088127136,
+      "obstacle_info_contribution_ratio": 0.0550913848,
+      "recent_revisit_trigger_count": 27.4799995422,
+      "stall_trigger_count": 158.9799957275,
+      "zero_info_step_count": 204.9299926758,
+      "turn_ge_90_count": 111.7300033569,
+      "turn_135_count": 25.7199993134,
+      "turn_180_count": 17.5,
+      "timeout_flag": 0.2199999988
     },
     "learner_replay_exploration_context": {
-      "loss": 2.4886679649,
-      "q_mean": 15.6978721619,
-      "target_q_mean": 15.5623512268,
-      "td_abs_mean": 2.8399481773,
-      "grad_norm": 30.1337738037,
+      "loss": 2.2599496841,
+      "q_mean": 18.3258647919,
+      "target_q_mean": 18.528213501,
+      "td_abs_mean": 2.6307811737,
+      "grad_norm": 26.4087696075,
       "replay_size": 100000.0,
       "epsilon": 0.04,
       "batch_size": 128,
@@ -265,23 +265,23 @@
       "train_every_env_steps": 16
     },
     "semantic_monitoring_context": {
-      "accessible_block_count": 5.2668843269,
-      "total_accessible_unknown_area": 452.9963684082,
-      "total_frontier_cluster_count": 11.0906381607,
-      "mean_block_area": 113.4493255615,
-      "local_frontier_coverage": 0.0252743047,
-      "local_frontier_block_area_mean": 0.4091188014,
-      "value_total_block_count_before_cap": 5.2668843269,
-      "value_packed_block_count": 5.2668843269,
+      "accessible_block_count": 5.1032066345,
+      "total_accessible_unknown_area": 436.8739318848,
+      "total_frontier_cluster_count": 10.6653738022,
+      "mean_block_area": 110.805305481,
+      "local_frontier_coverage": 0.0247943643,
+      "local_frontier_block_area_mean": 0.3862935305,
+      "value_total_block_count_before_cap": 5.1032066345,
+      "value_packed_block_count": 5.1032066345,
       "value_truncated_block_count": 0.0,
       "value_block_cap_hit_flag": 0.0,
-      "value_total_entry_count_before_cap": 11.0906381607,
-      "value_packed_entry_count": 11.0261259079,
-      "value_truncated_entry_count": 0.0645129234,
-      "value_entry_cap_hit_block_count": 0.0367396623,
-      "value_entry_cap_hit_flag": 0.0367396623,
-      "value_max_frontier_clusters_per_block": 4.6092920303,
-      "value_mean_frontier_clusters_per_block": 2.4848444462
+      "value_total_entry_count_before_cap": 10.6653738022,
+      "value_packed_entry_count": 10.5672397614,
+      "value_truncated_entry_count": 0.0981331915,
+      "value_entry_cap_hit_block_count": 0.0527667142,
+      "value_entry_cap_hit_flag": 0.0527667142,
+      "value_max_frontier_clusters_per_block": 4.6467413902,
+      "value_mean_frontier_clusters_per_block": 2.434787035
     },
     "missing_expected_columns": []
   },
@@ -312,7 +312,7 @@
     "total_env_steps": 500000,
     "final_env_steps": 500000,
     "total_train_episodes_configured": 600,
-    "total_train_episodes_completed": 1092,
+    "total_train_episodes_completed": 1115,
     "final_greedy_episodes": 100,
     "epsilon_start": 1.0,
     "epsilon_decay_steps": 240000,
@@ -321,9 +321,9 @@
     "reward_config": {
       "reward_revisit_penalty": 0.1,
       "reward_turn_penalty_scale": 0.05,
-      "reward_timeout_penalty": 8.0,
+      "reward_timeout_penalty": 10.0,
       "reward_step_penalty": 0.02,
-      "reward_terminal_bonus": 22.0,
+      "reward_terminal_bonus": 20.0,
       "reward_info_scale": 3.2,
       "reward_obstacle_weight": 0.25,
       "reward_turn_weight_45": 0.0,
@@ -354,9 +354,9 @@
       "final_greedy_episodes": 100
     },
     "expected_configuration_checks": {
-      "RewardTerminalBonus": {
-        "expected": 22,
-        "actual": 22.0,
+      "RewardTimeoutPenalty": {
+        "expected": 10,
+        "actual": 10.0,
         "match": true
       },
       "RewardInfoScale": {
@@ -408,8 +408,8 @@
       "actual": "cuda:0"
     },
     "runtime": {
-      "total_runtime_sec": 9767.98780589999,
-      "total_runtime_hms": "02:42:48"
+      "total_runtime_sec": 9560.326275800006,
+      "total_runtime_hms": "02:39:20"
     },
     "source_git": {
       "branch": "main",
@@ -421,7 +421,7 @@
     },
     "completion_state": {
       "last_checkpoint_env_steps": 500000,
-      "last_checkpoint_train_episode_idx": 1092,
+      "last_checkpoint_train_episode_idx": 1115,
       "training_completed_to_configured_env_steps": true
     },
     "warnings_and_errors": {
@@ -432,15 +432,15 @@
   "factual_reference_context": {
     "source": "training_results/history/history_index.json and training_results/history/tuning_map.md",
     "matched_prior_entries_by_recommended_run_prefix_count": 1,
+    "matched_prior_detail_storage": "not_duplicated_in_current_factual_report",
     "tuning_map_current_reference_baseline_label_present": true,
-    "context_role": "factual_context_only_not_a_codex_decision",
-    "matched_prior_detail_storage": "not_duplicated_in_current_factual_report"
+    "context_role": "factual_context_only_not_a_codex_decision"
   },
   "missing_artifacts": [],
   "parse_failures": [],
   "unverified_items": [
     {
-      "item": "posthoc/final_probe metrics",
+      "item": "posthoc/final-probe metrics",
       "reason": "not extracted under train_side_only_tuning status-only contract"
     }
   ],
@@ -448,10 +448,10 @@
   "source_integrity": {
     "source_training_repository_read_only": true,
     "source_run_outputs_read_only": true,
-    "artifact_copying_performed": false,
-    "forbidden_artifacts_copied": false,
     "source_repo_preexisting_untracked_items_observed": true,
-    "source_repo_preexisting_untracked_items_modified_by_codex": false
+    "source_repo_preexisting_untracked_items_modified_by_codex": false,
+    "artifact_copying_performed": false,
+    "forbidden_artifacts_copied": false
   },
   "factual_only_boundary": {
     "tuning_recommendation_provided": false,
@@ -463,6 +463,12 @@
   },
   "factual_summary_status": "factual_summary_ready",
   "tuning_recommendation_provided": false,
+  "test_side_status_only_missingness_summary": {
+    "skipped_optional_test_side_artifact_count": 9,
+    "missingness_treatment": "not_missing",
+    "reason": "train_side_only_tuning",
+    "metric_extraction": "not_performed"
+  },
   "validation_facts": {
     "schema_and_constants_present": true,
     "train_side_monitoring_required_groups_present": true,
@@ -474,11 +480,5 @@
     "run_name_matches_source_run_dir_basename": true,
     "path_sanitization": true,
     "write_scope": "training_results/current/current_training_run_analysis.json only"
-  },
-  "test_side_status_only_missingness_summary": {
-    "skipped_optional_test_side_artifact_count": 6,
-    "missingness_treatment": "not_missing",
-    "reason": "train_side_only_tuning",
-    "metric_extraction": "not_performed"
   }
 }
