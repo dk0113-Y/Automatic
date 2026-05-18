@@ -18,15 +18,16 @@ Include only these fields:
 Rules:
 - Copy Skill invocation exactly from the selected task interface.
 - Use the selected skill for execution details.
-- Prompt shell stays compact; the selected skill owns procedure, validation details, blockers, and artifact rules.
+- Prompt shell includes task-instance fields only; the selected skill owns procedures, validation details, blockers, and artifact rules.
 - Writes uses the task write scope or authorized output list only.
-- Validation uses compact labels: selected skill contract plus task-instance checks.
+- Use each task interface's Validation line exactly; do not append selected-skill internal checks.
 - Do not repeat digest field values outside the digest except `archive_id`, `source_analysis_json`, and output paths.
 - For archive tasks, the digest is the only long section.
-- Final report uses compact field names only.
+- Final report uses compact field names only; do not add per-boundary confirmation fields.
 - Keep prompts short.
 - Default Commit/push: commit and push after validation passes and only allowed files changed.
 - Block commit/push when validation fails or diff scope is outside the task allowlist.
+- Use the Commit/push rules from this document only; do not expand blocker lists.
 - Final report includes files changed, validation result, commit/push status, commit hash, push target, and remaining risks.
 
 ## 2. Final Prompt Format
@@ -69,7 +70,8 @@ Outputs: `training_results/current/current_training_run_analysis.json`
 
 Writes: current factual analysis JSON only
 
-Validation: selected_skill_contract; json_parse; required_top_level_keys; factual_summary_status; tuning_recommendation_provided_false; diff_scope; commit_push
+Validation line: selected_skill_contract; json_parse; required_top_level_keys; factual_summary_status; tuning_recommendation_provided_false; diff_scope; commit_push
+Use this line exactly; do not add reproducibility, posthoc/final_probe, source integrity, artifact-copying, or decision-boundary checks to the prompt shell.
 
 ### 3.2 single_run_analysis_archive_task
 
@@ -82,7 +84,8 @@ Outputs: single-run archive factual JSON; single-run archive `tuning_review.md`;
 
 Writes: archive pair plus history index plus tuning map
 
-Validation: selected_skill_contract; source_json; tuning_review_md_digest; baseline_fields; compact_history_index_fields; tuning_map_sync; archive_id; diff_scope; commit_push
+Validation line: selected_skill_contract; source_json; tuning_review_md_digest; baseline_fields; compact_history_index_fields; tuning_map_sync; archive_id; diff_scope; commit_push
+Use this line exactly; do not add digest field repetitions, expanded enum checks, blocker lists, or selected-skill validation lists outside the digest.
 
 Digest block rule: Include the supplied digest between `BEGIN_TUNING_REVIEW_MD_DIGEST` and `END_TUNING_REVIEW_MD_DIGEST` markers. Place each marker on its own unindented line.
 
