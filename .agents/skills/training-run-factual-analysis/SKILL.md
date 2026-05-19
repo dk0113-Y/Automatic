@@ -251,28 +251,72 @@ Density allowlist:
 
 | Store | Do not store |
 | --- | --- |
-| Compact scalar values | Per-row arrays; per-episode arrays |
-| Status labels and enums | Full CSV rows; full CSV headers |
-| Small objects and key deltas | Full logs; full stdout/stderr |
-| Short diagnostic summaries | Long command traces; broad numeric dumps |
+| `decision_relevant_factual_evidence` | Per-row arrays; per-episode arrays |
+| `validation_gate_summary` | Full CSV rows; full CSV headers |
+| Compact status labels and enums | Full logs; full stdout/stderr |
+| Small objects, key deltas, short diagnostics | Long command traces; verbose command purposes |
 | Stable identifiers and sanitized paths | Full artifact inventories; raw config dumps |
-| Compact validation facts | Long tracebacks; raw outputs; binary artifacts |
-| Presence/parse/status metadata | Plots; trajectories; checkpoints; model weights |
+| Presence/parse/status metadata | Long validation prose; long tracebacks |
+| Empty status lists when empty | Plots; trajectories; checkpoints; model weights |
+| Compact blockers when present | Raw outputs; binary artifacts |
+
+Evidence priority:
+
+- Evidence admission status.
+- Endpoint performance.
+- Initial-to-endpoint deltas.
+- Late-stage deltas/directions.
+- Behavior diagnostics.
+- Reward composition.
+- Learner/replay/exploration state.
+- Key comparable config/runtime knobs.
+- Artifact status/blockers.
+
+Density classes:
+
+- `decision_relevant_factual_evidence`: evidence GPT needs for review.
+- `validation_gate_summary`: compact pass/block status for evidence admission.
+- `process_trace`: command and validation metadata; keep minimal.
+
+Compress or avoid:
+
+- Repeated source identity checks.
+- Repeated posthoc/final_probe skipped status summaries.
+- Duplicated behavior event counts across multiple groups.
+- Requested/readback backend fields when a strict backend summary is enough.
+- Full config snapshots and raw artifact inventories.
+- Full command output, stdout/stderr, and long tracebacks.
 
 Field density rules:
 
 - `files_inspected`: compact artifact-role map only.
-  Include artifact label, presence, parse status, evidence role.
+  Include artifact label, presence, parse status, and evidence role.
+  Exclude redundant path prose.
 - `commands_run`: compact command metadata only.
-  Include command label, purpose, exit status, short validation result.
-  Exclude full command output.
+  Store `{label, status}` or `{label, status, short_result}`.
+  Exclude long purpose sentences and full command output.
+- `reproducible_launch`: preserve `contract_verdict`, strict
+  reproducibility status, deterministic backend summary, seed/env summary,
+  and sanitized git identity when available. Compress requested/readback
+  backend details into compact status summaries.
 - `missing_artifacts`: compact status list, not an audit report.
 - `parse_failures`: compact status list, not long tracebacks.
 - `unverified_items`: compact status list of unresolved evidence gaps.
 - `configuration_and_runtime`: compact comparability/runtime summary,
-  not a copied config snapshot.
+  not a copied config snapshot. Keep comparable knobs and runtime identity
+  needed for GPT diagnosis.
+- `posthoc_selection`; `supplemental_final_probe`: keep status, role,
+  missingness treatment, and `metric_extraction` status only.
+- `test_side_status_only_missingness_summary`: avoid when redundant with
+  `posthoc_selection` and `supplemental_final_probe`; otherwise use one
+  compact summary object.
+- `reward_event_summary`: keep information-gain and obstacle-contribution
+  fields; avoid duplicating behavior counts already stored in
+  `key_behavior_diagnostics`.
 - `derived_exploration_efficiency`: diagnostic-only;
   not standalone superiority evidence.
+- `validation_facts`: replace with or compress toward `validation_summary`
+  unless a blocker requires more detail.
 - JSON payload: optimized for GPT tuning review.
   Preserve tuning-relevant factual evidence and remove process noise.
 

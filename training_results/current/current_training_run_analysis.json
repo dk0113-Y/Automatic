@@ -3,13 +3,6 @@
   "report_type": "training_run_factual_analysis",
   "generated_by": "codex",
   "source_run_dir": "source_repo:outputs/stable_updates1_info305_epsend004_budget500k_decay240k_minreplay8000_seed0_20260518_194311",
-  "source_run_dir_identity": {
-    "provided_source_run_dir_sanitized": "source_repo:outputs/stable_updates1_info305_epsend004_budget500k_decay240k_minreplay8000_seed0_20260518_194311",
-    "basename": "stable_updates1_info305_epsend004_budget500k_decay240k_minreplay8000_seed0_20260518_194311",
-    "run_name_matches_basename": true,
-    "run_name_starts_with_reproducibility_run_name": true,
-    "source_run_dir_reference": "source_repo:outputs/stable_updates1_info305_epsend004_budget500k_decay240k_minreplay8000_seed0_20260518_194311"
-  },
   "run_name": "stable_updates1_info305_epsend004_budget500k_decay240k_minreplay8000_seed0_20260518_194311",
   "files_inspected": [
     {
@@ -46,15 +39,13 @@
       "artifact_label": "logs/train_steps.csv",
       "present": true,
       "parse_status": "parsed",
-      "evidence_role": "source_train_step_monitoring",
-      "row_count": 992
+      "evidence_role": "source_train_step_monitoring"
     },
     {
       "artifact_label": "logs/train_episodes.csv",
       "present": true,
       "parse_status": "parsed",
-      "evidence_role": "source_train_episode_monitoring",
-      "row_count": 1126
+      "evidence_role": "source_train_episode_monitoring"
     },
     {
       "artifact_label": "logs/posthoc_selection_summary.json",
@@ -77,33 +68,32 @@
   ],
   "commands_run": [
     {
-      "command_label": "source_run_artifact_listing",
-      "purpose": "confirm artifact presence only",
-      "exit_status": "passed",
-      "validation_result": "expected logs directory present"
+      "label": "artifact_presence_check",
+      "status": "passed"
     },
     {
-      "command_label": "compact_json_csv_parse",
-      "purpose": "extract compact factual summary",
-      "exit_status": "passed",
-      "validation_result": "json and train CSV artifacts parsed"
+      "label": "compact_fact_extraction",
+      "status": "passed"
     },
     {
-      "command_label": "report_validation",
-      "purpose": "validate selected skill contract and diff scope",
-      "exit_status": "passed",
-      "validation_result": "selected skill contract, JSON parse, required keys, factual status, and diff scope checked"
+      "label": "report_validation",
+      "status": "passed"
     }
   ],
   "reproducible_launch_status": "reproducible_launch_confirmed",
   "reproducible_launch": {
-    "status": "reproducible_launch_confirmed",
-    "contract_artifact_present": true,
     "contract_verdict": "strict_contract_ready",
     "strict_reproducibility": true,
-    "deterministic_algorithms_enabled": true,
-    "deterministic_algorithms_warn_only": false,
-    "determinism_environment_variables": {
+    "deterministic_backend_summary": {
+      "deterministic_algorithms_enabled": true,
+      "deterministic_algorithms_warn_only": false,
+      "tf32_disabled": true,
+      "cudnn_benchmark_disabled": true,
+      "cudnn_deterministic": true
+    },
+    "seed_env_summary": {
+      "seed": 0,
+      "seed_policy_status": "fixed_train_and_eval_seed_fields_present",
       "PYTHONHASHSEED": {
         "value": 0,
         "present": true
@@ -111,74 +101,18 @@
       "CUBLAS_WORKSPACE_CONFIG": {
         "value": ":4096:8",
         "present": true
-      }
-    },
-    "backend_requested_flags": {
-      "enable_tf32": false,
-      "enable_cudnn_benchmark": false,
-      "enable_amp": false,
-      "enable_inference_amp": false,
-      "enable_torch_compile": false,
-      "enable_channels_last": false
-    },
-    "backend_runtime_readback": {
-      "requested_device": "cuda",
-      "strict_reproducibility": true,
-      "deterministic_algorithms_warn_only": false,
-      "cublas_workspace_config_action": {
-        "name": "CUBLAS_WORKSPACE_CONFIG",
-        "value": ":4096:8",
-        "preexisting": true,
-        "set_by_script": false,
-        "status": "preexisting"
       },
-      "torch.backends.cudnn.deterministic": true,
-      "torch.backends.cudnn.benchmark": false,
-      "torch.backends.cuda.matmul.allow_tf32": false,
-      "torch.backends.cudnn.allow_tf32": false,
-      "torch.are_deterministic_algorithms_enabled()": true
-    },
-    "seed": 0,
-    "seed_policy_status": "fixed_train_and_eval_seed_fields_present",
-    "fixed_seed_fields": {
-      "use_fixed_train_episode_seeds": true,
       "fixed_train_episode_seed_base": 20259323,
-      "use_fixed_eval_seeds": true,
-      "fixed_final_probe_seed_base": 20261323,
-      "use_fixed_model_select_seeds": true,
-      "fixed_model_select_seed_base": 20262323
+      "fixed_final_probe_seed_base": 20261323
     },
-    "requested_device": "cuda",
-    "actual_device": "cuda:0",
-    "source_git_branch": "main",
-    "source_git_commit_sha": "0d0826d4b99164b44fcb34edbe01f5a09b255d28",
-    "reconstructed_launch_command_status": "present_sanitized_not_copied",
-    "reproducibility_limitations_count": 5,
-    "contract_notes_count": 1
-  },
-  "train_side_mode_detection": {
-    "train_side_only_tuning": true,
-    "sources": [
-      "logs/metric_snapshot.json",
-      "logs/config_snapshot.json",
-      "logs/artifact_index.json"
-    ],
-    "test_side_evaluation_status": "skipped_train_side_only_tuning",
-    "skipped_test_side_evaluation": {
-      "reason": "train_side_only_tuning",
-      "skipped_operations": [
-        "posthoc_checkpoint_selection",
-        "posthoc_candidate_scoring",
-        "posthoc_final_artifacts",
-        "best_vs_last_test_side_comparison",
-        "final_probe_evaluation",
-        "final_probe_csv_summary_writing",
-        "automatic_winner_checkpoint_selection"
-      ]
+    "device": {
+      "requested": "cuda",
+      "actual": "cuda:0"
     },
-    "formal_final_object_role": "train_side_tuning_endpoint",
-    "formal_final_object_source_role": "status_only_not_performance_evidence",
-    "mode_detection_method": "explicit_snapshot_fields"
+    "source_git": {
+      "branch": "main",
+      "commit": "0d0826d4b99164b44fcb34edbe01f5a09b255d28"
+    }
   },
   "train_side_monitoring": {
     "row_counts": {
@@ -277,14 +211,7 @@
       "obstacle_info_gain_sum": 10.552929,
       "weighted_obstacle_info_gain_sum": 2.638232,
       "weighted_info_gain_sum": 48.561436,
-      "obstacle_info_contribution_ratio": 0.054372,
-      "recent_revisit_trigger_count": 28.450001,
-      "stall_trigger_count": 144.619995,
-      "zero_info_step_count": 188.100006,
-      "turn_ge_90_count": 112.669998,
-      "turn_135_count": 29.690001,
-      "turn_180_count": 17.18,
-      "timeout_flag": 0.2
+      "obstacle_info_contribution_ratio": 0.054372
     },
     "learner_replay_exploration_context": {
       "loss": 3.27476,
@@ -304,14 +231,6 @@
       "learner_updates_per_iter": 1,
       "train_every_env_steps": 16
     },
-    "semantic_monitoring_context": {
-      "accessible_block_count": 5.322865,
-      "total_accessible_unknown_area": 458.181366,
-      "total_frontier_cluster_count": 11.155817,
-      "value_packed_block_count": 5.322865,
-      "value_truncated_block_count": 0.0,
-      "value_entry_cap_hit_flag": 0.063926
-    },
     "missing_expected_columns": {
       "train_steps.csv": [],
       "train_episodes.csv": []
@@ -321,32 +240,19 @@
     "status": "skipped_train_side_only_tuning",
     "role": "not_applicable_for_train_side_tuning",
     "missingness_treatment": "not_missing",
-    "reason": "train_side_only_tuning",
-    "artifact_presence_status_only": {
-      "posthoc_selection_summary_json_present": false,
-      "posthoc_candidate_scores_csv_present": false
-    },
     "metric_extraction": "not_performed_status_only"
   },
   "supplemental_final_probe": {
     "status": "skipped_train_side_only_tuning",
     "role": "not_applicable_for_train_side_tuning",
     "missingness_treatment": "not_missing",
-    "reason": "train_side_only_tuning",
-    "artifact_presence_status_only": {
-      "final_probe_summary_json_present": false,
-      "final_probe_csv_present": false,
-      "best_vs_last_gap_summary_json_present": false
-    },
     "metric_extraction": "not_performed_status_only"
   },
   "configuration_and_runtime": {
     "budget_mode": "env_steps",
     "total_env_steps": 500000,
     "final_env_steps": 500000,
-    "total_train_episodes_configured": 600,
     "total_train_episodes_completed": 1120,
-    "final_greedy_episodes": 100,
     "epsilon_decay_steps": 240000,
     "epsilon_end": 0.04,
     "min_replay_size": 8000,
@@ -379,15 +285,8 @@
       "max_entries_per_block": 8,
       "final_greedy_episodes": 100
     },
-    "expected_configuration_checks": {
-      "train_side_only_tuning": true,
-      "formal_protocol_revision": "formal_posthoc_trainselect_v1",
-      "test_side_evaluation_status": "skipped_train_side_only_tuning",
-      "posthoc_final_probe_status_only": true
-    },
     "train_side_only_tuning": true,
     "test_side_evaluation_status": "skipped_train_side_only_tuning",
-    "skipped_test_side_evaluation_reason": "train_side_only_tuning",
     "device": {
       "requested": "cuda",
       "actual": "cuda:0"
@@ -404,52 +303,22 @@
       "strict_reproducibility": true,
       "deterministic_algorithms_enabled": true,
       "contract_verdict": "strict_contract_ready"
-    },
-    "completion_state": {
-      "last_checkpoint_env_steps": 500000,
-      "last_checkpoint_train_episode_idx": 1120,
-      "best_checkpoint_env_steps": null
-    },
-    "warnings_and_errors": {
-      "insufficient_evidence_flags": []
     }
   },
   "missing_artifacts": [],
   "parse_failures": [],
   "unverified_items": [],
   "forbidden_artifact_findings": [],
-  "source_integrity": {
-    "source_training_repository_read_only": true,
-    "source_run_outputs_read_only": true,
-    "artifact_copying_performed": false,
-    "forbidden_artifacts_copied": false
-  },
-  "factual_only_boundary": {
-    "tuning_recommendation_provided": false,
-    "baseline_update_decision_made": false,
-    "next_hyperparameters_selected": false,
-    "archive_history_landing_executed": false,
-    "posthoc_final_probe_metrics_extracted": false,
-    "comparative_conclusion_provided": false
-  },
   "factual_summary_status": "factual_summary_ready",
   "tuning_recommendation_provided": false,
-  "test_side_status_only_missingness_summary": {
-    "skipped_optional_test_side_artifact_count": 3,
-    "missingness_treatment": "not_missing_train_side_only_tuning",
-    "reason": "train_side_only_tuning",
-    "metric_extraction": "not_performed_status_only"
-  },
-  "validation_facts": {
-    "schema_and_constants_present": true,
-    "train_side_monitoring_required_groups_present": true,
-    "derived_metrics_exact_seven_present": true,
-    "derived_metric_role": "diagnostic_only",
-    "derived_evidence_role": "not_standalone_superiority_evidence",
+  "validation_summary": {
+    "schema_and_constants": "passed",
+    "train_side_monitoring_contract": "passed",
+    "derived_metrics_contract": "passed",
     "test_side_status_only_contract": "passed",
     "factual_summary_status_contract": "passed",
-    "run_name_matches_source_run_dir_basename": true,
-    "path_sanitization": "passed_source_paths_sanitized",
-    "write_scope": "passed_current_factual_analysis_json_only"
+    "path_sanitization": "passed",
+    "write_scope": "current_factual_analysis_json_only",
+    "factual_only_boundary": "passed"
   }
 }
