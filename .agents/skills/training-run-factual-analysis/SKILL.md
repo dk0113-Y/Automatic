@@ -128,6 +128,7 @@ Forbidden test-side content:
 ## 5. Extraction Targets
 
 Extraction order:
+
 1. `reproducible_launch`
 2. `train_side_mode_detection`
 3. `train_side_monitoring`
