@@ -114,6 +114,13 @@ Decision rules:
 - Do not default to robustness confirmation after a useful single-seed train-side result.
 - Recommendations must bind parameter/config/reward change to evidence and a testable hypothesis.
 
+Candidate surface scan:
+- If evidence gates pass and the prior hypothesis is refuted, or if `recommendation_type=hold_current_baseline`, evaluate a compact `candidate_surface_scan` before final next-action selection.
+- Include at most three candidate surfaces from: current-surface bracket/reversal, launcher-ready alternative surface, or bounded config/implementation surface.
+- Each candidate uses fields: `surface`, `status`, `evidence_basis`, `risk`, `decision`.
+- Use `hold_current_baseline` only when no scanned candidate has `decision=select_next_run`.
+- Do not treat one active-surface refutation as global tuning exhaustion.
+
 ## 5. Output Format
 
 Use exactly these Chinese user-facing sections:
@@ -149,6 +156,7 @@ Each output must explicitly include:
 - `parameter_change`
 - `evidence_rationale`
 - `expected_validation_focus`
+- `candidate_surface_scan` when prior validation is `refuted` or `recommendation_type=hold_current_baseline`
 
 Command format:
 - If `recommendation_type = next_run_plan` and the selected change is launcher-ready, output exactly one standalone command in a `text` fenced block.
