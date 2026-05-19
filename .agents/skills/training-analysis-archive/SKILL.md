@@ -211,7 +211,28 @@ Stop on existing `archive_id` unless replacement is explicitly authorized.
 
 ## 7. Tuning Map Sync Contract
 
-`training_results/history/tuning_map.md` is current navigation, not decision authority or a second history narrative.
+`training_results/history/tuning_map.md` is compact current navigation only.
+
+Map role:
+
+- Not a full chronological history.
+- Not a second tuning review.
+- Not decision authority.
+- No full GPT digest duplication.
+- No `history_index.json` duplication.
+
+Required map sections:
+
+1. `# Tuning Map`
+2. `## 1. Scope`
+3. `## 2. Current Train-Side Reference Baseline`
+4. `## 3. Active Tuning Branch`
+5. `## 4. Tuning Path Summary`
+6. `## 5. Refuted Directions`
+7. `## 6. Supported / Retained Directions`
+8. `## 7. Open Uncertainties`
+9. `## 8. Next Candidate Surfaces`
+10. `## 9. Maintenance Rule`
 
 Sync rules:
 
@@ -219,8 +240,6 @@ Sync rules:
 - Do not inspect factual metrics.
 - Do not infer missing digest values.
 - Do not create recommendations.
-- Do not duplicate the full digest.
-- Do not append repeated retained-baseline prose.
 - De-duplicate by direction/surface where practical.
 - Keep each archive contribution compact.
 
@@ -228,21 +247,30 @@ Allowed map updates:
 
 | Section | Rule |
 | --- | --- |
-| Current Train-Side Reference Baseline | Current reference baseline and basis from GPT baseline fields only. |
-| Tuning Path Summary | One compact row per archive. |
+| Scope | Maximum 5 compact bullets. |
+| Current Train-Side Reference Baseline | One table; short aggregate basis, no per-run retained-baseline prose. |
+| Active Tuning Branch | One table; no run-by-run prose. |
+| Tuning Path Summary | Short rows; avoid long next-run names except latest active candidate. |
 | Refuted Directions | Group or update by direction. |
-| Supported / Retained Directions | Keep only useful navigation signal. |
-| Open Uncertainties | Merge overlapping `remaining_uncertainty` and `target_uncertainty` when practical. |
-| Next Candidate Surfaces | Keep latest active candidate plus needed pending/conditional surfaces. |
+| Supported / Retained Directions | Aggregate repeated baseline-retention records. |
+| Open Uncertainties | Merge overlapping `remaining_uncertainty` and `target_uncertainty`. |
+| Next Candidate Surfaces | Latest active surface plus explicit pending/conditional surfaces only. |
+| Maintenance Rule | Compact bullets only. |
 
 Map excludes:
 
+- Full digest content.
+- `history_index.json` duplication.
 - Global optimum claims.
 - Cross-seed superiority claims.
 - Paper-level superiority claims.
 - Tuning completion claims.
 - Raw metrics.
-- Full digest duplication.
+- Full command.
+- Full evidence details.
+- Per-run retained-baseline rows after each refuted/partial archive.
+- Stale next-candidate surfaces already executed, refuted, or superseded.
+- Repeated `epsend004 retained` prose per archive.
 
 ## 8. Validation
 
@@ -262,6 +290,9 @@ Required validation labels:
 - `tuning_review_md_digest_preserved`
 - `history_index_update`
 - `tuning_map_sync`
+- `tuning_map_current_navigation_check`
+- `tuning_map_retained_baseline_dedup_check`
+- `tuning_map_next_surface_staleness_check`
 - `diff_scope_check`
 
 Validation rules:
@@ -272,7 +303,9 @@ Validation rules:
 - Confirm writes match the output allowlist.
 - Confirm tracked paths are repository-relative and non-private.
 - Confirm `history_index.json` is compact and excludes dense fields.
-- Confirm `tuning_map.md` sync uses GPT digest fields only.
+- Confirm `tuning_map.md` is compact current navigation from GPT digest fields only.
+- Confirm retained-baseline rows are aggregated instead of repeated per archive.
+- Confirm next-candidate surfaces exclude executed, refuted, or superseded surfaces unless explicitly pending/conditional.
 - Confirm diff scope matches authorized outputs.
 
 ## 9. Blockers
@@ -300,6 +333,9 @@ Block when:
 - Digest marker, heading, field, enum, status, command, or baseline validation fails.
 - Writes exceed the output allowlist or scope guard.
 - Codex would infer, decide, reinterpret, summarize, compress, expand, rewrite, or change GPT-owned content.
+- Map sync would append another retained-baseline row when an aggregate row already exists.
+- Map sync would list executed, refuted, or superseded next surfaces as active candidates.
+- Map sync would require Codex to infer a missing GPT decision.
 - Tracked history payloads would contain private absolute paths.
 
 ## 10. Final Report
