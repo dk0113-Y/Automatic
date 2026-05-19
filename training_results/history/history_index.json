@@ -442,6 +442,38 @@
         "no_source_run_output_modification": true,
         "no_forbidden_artifacts_copied": true
       }
+    },
+    {
+      "archive_id": "stable_updates1_info31_obst020_epsend004_budget500k_decay240k_minreplay8000_seed0_20260519_110219",
+      "archive_type": "single_run",
+      "run_name_or_group": "stable_updates1_info31_obst020_epsend004_budget500k_decay240k_minreplay8000_seed0_20260519_110219",
+      "created_by": "codex",
+      "tuning_review_generated_by": "gpt",
+      "pairing_status": "paired",
+      "training_analysis_path": "training_results/history/single_runs/stable_updates1_info31_obst020_epsend004_budget500k_decay240k_minreplay8000_seed0_20260519_110219/training_run_analysis.json",
+      "tuning_review_path": "training_results/history/single_runs/stable_updates1_info31_obst020_epsend004_budget500k_decay240k_minreplay8000_seed0_20260519_110219/tuning_review.md",
+      "source_current_analysis_path": "training_results/current/current_training_run_analysis.json",
+      "source_report_type": "training_run_factual_analysis",
+      "tuning_review_report_type": "gpt_tuning_review_digest",
+      "recommendation_type": "next_run_plan",
+      "prior_validation_status": "supported",
+      "validation_status": "supported",
+      "baseline_update_status": "updated",
+      "current_train_side_reference_baseline_before": "stable_epsend004_budget500k_decay240k_minreplay8000_seed0_20260511_195904",
+      "baseline_candidate": "stable_updates1_info31_obst020_epsend004_budget500k_decay240k_minreplay8000_seed0_20260519_110219",
+      "current_train_side_reference_baseline_after": "stable_updates1_info31_obst020_epsend004_budget500k_decay240k_minreplay8000_seed0_20260519_110219",
+      "baseline_scope": "single_seed_train_side_reference_only",
+      "selected_next_surface": "reward-function information composition on updated obst020 baseline",
+      "parameter_change": "RewardObstacleWeight: 0.20 -> 0.15; keep RewardInfoScale=3.1, RewardStepPenalty=0.02, RewardTimeoutPenalty=8, RewardTerminalBonus=20, LearnerUpdatesPerIter=1, EpsilonEnd=0.04, EpsilonDecaySteps=240000, MinReplaySize=8000",
+      "recommended_next_run_name": "stable_updates1_info31_obst015_epsend004_budget500k_decay240k_minreplay8000_seed0",
+      "validation": {
+        "source_analysis_json_parse": "passed",
+        "tuning_review_md_digest_validation": "passed",
+        "single_run_status_semantics": "passed",
+        "no_training_repo_modification": true,
+        "no_source_run_output_modification": true,
+        "no_forbidden_artifacts_copied": true
+      }
     }
   ]
 }
