@@ -14,34 +14,29 @@ description: Archive single-run training-analysis records into Automatic_2 histo
 | Archive type | `single_run` only |
 | Archive root | `training_results/history/single_runs/<archive_id>` |
 
-Default paths:
-
-- `source_analysis_json`: `training_results/current/current_training_run_analysis.json`
-- `history_index_path`: `training_results/history/history_index.json`
-- `tuning_map_path`: `training_results/history/tuning_map.md`
-
 ## 2. Contract
 
-Archive one single-run Codex factual analysis JSON with one GPT-provided `tuning_review.md` digest.
+Archive one single-run Codex factual JSON with one GPT-owned `tuning_review.md` digest.
 
-Codex owns:
+Execution contract:
 
-- Validate input fields and archive id uniqueness.
-- Preserve one Codex factual analysis JSON without changing its meaning.
-- Preserve one GPT-provided `tuning_review.md` digest without changing its meaning.
-- Validate digest markers, headings, required fields, enums, single-run status semantics, and command format.
-- Write the archive pair.
-- Update `training_results/history/history_index.json` as a compact locator and status index.
-- Sync `training_results/history/tuning_map.md` from GPT digest fields only.
-- Report compact validation and write status.
+| Step | Rule |
+| --- | --- |
+| Preserve | One Codex factual analysis JSON; one GPT digest, with meaning unchanged. |
+| Validate | Inputs, archive id, digest markers, headings, fields, enums, status semantics, command. |
+| Write | Archive pair only: `training_run_analysis.json` and `tuning_review.md`. |
+| Update | `training_results/history/history_index.json` as a compact locator/index. |
+| Sync | `training_results/history/tuning_map.md` from GPT digest fields only. |
+| Report | Compact validation, write, scope, commit, risk fields. |
 
 Authority boundary:
 
-- Do not reanalyze training outputs.
-- Do not inspect factual metrics to decide archive content or tuning map content.
-- Do not infer baseline status, selected surface, validation status, tuning recommendation, or next hyperparameters.
-- Do not decide stop, continue, branch, method conclusion, paper conclusion, accepted baseline, or performance superiority.
-- Do not summarize, expand, compress, rewrite, reinterpret, or otherwise change GPT digest meaning.
+| Codex does not | Scope |
+| --- | --- |
+| Reanalyze | Training outputs or factual metrics for archive/map decisions. |
+| Infer | Baseline status, selected surface, validation status, tuning recommendation, next hyperparameters. |
+| Decide | Stop/continue/branch, method conclusion, paper conclusion, accepted baseline, performance superiority. |
+| Alter digest meaning | Summarize, expand, compress, rewrite, reinterpret, or change GPT digest content. |
 
 ## 3. Inputs
 
@@ -49,30 +44,26 @@ Authority boundary:
 | --- | --- | --- |
 | `archive_type` | yes | Must be `single_run`. |
 | `archive_id` | yes | Unique single-run archive id. |
-| `source_analysis_json` | yes | Path or supplied JSON object; source `report_type` must be `training_run_factual_analysis`. |
-| `tuning_review_md_digest` | yes | GPT digest between required begin and end markers. |
-| `history_index_path` | yes | Path for `training_results/history/history_index.json`. |
-| `tuning_map_path` | yes | Path for `training_results/history/tuning_map.md`. |
+| `source_analysis_json` | yes | Path or JSON object; `report_type=training_run_factual_analysis`. |
+| `tuning_review_md_digest` | yes | GPT digest between required markers. |
+| `history_index_path` | yes | `training_results/history/history_index.json`. |
+| `tuning_map_path` | yes | `training_results/history/tuning_map.md`. |
 
-Input discipline:
-
-- Treat `history_index_path` and `tuning_map_path` as repository-relative tracked paths.
-- Use repository-relative paths in tracked history payloads.
-- Store no private absolute paths in tracked history payloads.
+Path rule: tracked history payloads use repository-relative paths and no private absolute paths.
 
 ## 4. Digest Contract
 
 Marker rules:
 
-| Rule | Required value |
+| Rule | Required |
 | --- | --- |
 | `BEGIN_TUNING_REVIEW_MD_DIGEST` exists | yes |
 | `END_TUNING_REVIEW_MD_DIGEST` exists | yes |
-| Markers are on own unindented lines | yes |
+| Markers on own unindented lines | yes |
 | Exactly one digest block | yes |
-| Digest is wrapped in a fenced code block | no |
+| Fenced code wrapper | no |
 | Literal triple-backtick sequence inside digest | forbidden |
-| Marker lines are written to `tuning_review.md` | no |
+| Marker lines written to `tuning_review.md` | no |
 
 Required headings:
 
@@ -124,12 +115,12 @@ Command validation when `recommendation_type=next_run_plan`:
 - `command` does not include literal triple-backtick sequences.
 - `command` is not stored in `history_index.json`.
 
-Preservation rules:
+Preservation:
 
-- Extract only the marker body.
+- Extract marker body only.
 - Exclude marker lines from written `tuning_review.md`.
-- Preserve the digest body exactly except for removing the enclosing marker lines.
-- Do not invent hypotheses, evidence, commands, validation focus, recommendations, baseline values, or tuning decisions.
+- Preserve digest body exactly except marker removal.
+- Do not invent hypotheses, evidence, commands, validation focus, recommendations, baselines, or tuning decisions.
 
 ## 5. Archive Writes
 
@@ -142,22 +133,21 @@ Output allowlist:
 
 Write sequence:
 
-1. Validate `archive_type`, input presence, and `archive_id` uniqueness.
-2. Parse `source_analysis_json`.
-3. Validate source `report_type=training_run_factual_analysis`.
-4. Extract and validate the GPT digest body.
-5. Create `training_results/history/single_runs/<archive_id>`.
-6. Write preserved `training_run_analysis.json`.
-7. Write `tuning_review.md` from the digest body only.
-8. Append or create the compact `history_index.json` entry.
-9. Sync `tuning_map.md` from GPT digest fields only.
-10. Validate diff scope and output allowlist.
+1. Validate `archive_type`, inputs, and `archive_id` uniqueness.
+2. Parse `source_analysis_json`; require `report_type=training_run_factual_analysis`.
+3. Extract and validate GPT digest body.
+4. Create `training_results/history/single_runs/<archive_id>`.
+5. Write preserved `training_run_analysis.json`.
+6. Write `tuning_review.md` from digest body only.
+7. Append or create compact `history_index.json` entry.
+8. Sync `tuning_map.md` from GPT digest fields only.
+9. Validate diff scope and output allowlist.
 
-Artifact discipline:
+Scope guard:
 
 - Do not create `archive_manifest.json`.
 - Do not copy raw artifacts, checkpoints, model weights, full logs, full CSVs, plots, trajectories, or binary artifacts.
-- Do not modify training source code, training outputs, checkpoints, model weights, logs, CSVs, plots, trajectories, or existing archive payloads.
+- Do not modify training code/outputs, checkpoints, weights, logs, CSVs, plots, trajectories, or existing archives.
 
 ## 6. Index Density Contract
 
@@ -169,9 +159,9 @@ Required `history_index.json` root if missing:
 | `index_type` | `training_analysis_history_index` |
 | `entries` | `[]` |
 
-Single-run index entry fields:
+Single-run index fields:
 
-| Field | Value source |
+| Field | Source |
 | --- | --- |
 | `archive_id` | input |
 | `archive_type` | `single_run` |
@@ -184,29 +174,27 @@ Single-run index entry fields:
 | `source_current_analysis_path` | `training_results/current/current_training_run_analysis.json` |
 | `source_report_type` | `training_run_factual_analysis` |
 | `tuning_review_report_type` | `gpt_tuning_review_digest` |
-| `recommendation_type` | GPT digest field |
-| `prior_validation_status` | GPT digest field |
-| `validation_status` | GPT digest field |
-| `baseline_update_status` | GPT digest field |
-| `current_train_side_reference_baseline_before` | GPT digest field |
-| `baseline_candidate` | GPT digest field |
-| `current_train_side_reference_baseline_after` | GPT digest field |
-| `baseline_scope` | GPT digest field |
-| `selected_next_surface` | GPT digest field |
-| `parameter_change` | GPT digest field |
-| `recommended_next_run_name` | GPT digest field |
-| compact validation fields | status labels for source parse, digest validation, semantic checks, write scope, and artifact guard |
-
-Index must remain a compact locator and validation index.
+| `recommendation_type` | GPT digest |
+| `prior_validation_status` | GPT digest |
+| `validation_status` | GPT digest |
+| `baseline_update_status` | GPT digest |
+| `current_train_side_reference_baseline_before` | GPT digest |
+| `baseline_candidate` | GPT digest |
+| `current_train_side_reference_baseline_after` | GPT digest |
+| `baseline_scope` | GPT digest |
+| `selected_next_surface` | GPT digest |
+| `parameter_change` | GPT digest |
+| `recommended_next_run_name` | GPT digest |
+| compact validation fields | source parse, digest validation, semantics, write scope, artifact guard |
 
 Index stores:
 
 - Repository-relative paths.
 - Pairing status.
-- GPT-owned compact decision fields listed above.
+- Listed GPT-owned compact fields.
 - Compact validation fields.
 
-Index must not store:
+Index excludes:
 
 - Full digest content.
 - `key_evidence`.
@@ -219,11 +207,11 @@ Index must not store:
 - Raw metrics.
 - Private absolute paths.
 
-Stop on an existing `archive_id` unless explicit replacement authorization exists.
+Stop on existing `archive_id` unless replacement is explicitly authorized.
 
 ## 7. Tuning Map Sync Contract
 
-`training_results/history/tuning_map.md` is a compact current navigation summary, not decision authority and not a second history narrative.
+`training_results/history/tuning_map.md` is current navigation, not decision authority or a second history narrative.
 
 Sync rules:
 
@@ -233,28 +221,28 @@ Sync rules:
 - Do not create recommendations.
 - Do not duplicate the full digest.
 - Do not append repeated retained-baseline prose.
-- De-duplicate by direction or surface where practical.
+- De-duplicate by direction/surface where practical.
 - Keep each archive contribution compact.
 
-Allowed map sections and update rules:
+Allowed map updates:
 
-| Section | Contract |
+| Section | Rule |
 | --- | --- |
-| Current Train-Side Reference Baseline | Record only current reference baseline and basis from GPT baseline fields. |
-| Tuning Path Summary | Append one compact row per archive. |
-| Refuted Directions | Group or update by direction instead of endlessly duplicating rows. |
-| Supported / Retained Directions | Keep only currently useful navigation signal. |
-| Open Uncertainties | Merge overlapping `remaining_uncertainty` and `target_uncertainty` text when practical. |
-| Next Candidate Surfaces | Keep the latest active candidate plus necessary pending or conditional surfaces. |
+| Current Train-Side Reference Baseline | Current reference baseline and basis from GPT baseline fields only. |
+| Tuning Path Summary | One compact row per archive. |
+| Refuted Directions | Group or update by direction. |
+| Supported / Retained Directions | Keep only useful navigation signal. |
+| Open Uncertainties | Merge overlapping `remaining_uncertainty` and `target_uncertainty` when practical. |
+| Next Candidate Surfaces | Keep latest active candidate plus needed pending/conditional surfaces. |
 
-Map boundaries:
+Map excludes:
 
-- No global optimum claims.
-- No cross-seed superiority claims.
-- No paper-level superiority claims.
-- No tuning completion claims.
-- No raw metrics dump.
-- No full digest duplication.
+- Global optimum claims.
+- Cross-seed superiority claims.
+- Paper-level superiority claims.
+- Tuning completion claims.
+- Raw metrics.
+- Full digest duplication.
 
 ## 8. Validation
 
@@ -278,16 +266,14 @@ Required validation labels:
 
 Validation rules:
 
-- Confirm first-line YAML frontmatter remains valid when editing this skill.
-- Confirm `archive_type=single_run`.
-- Confirm `archive_id` does not already exist.
-- Confirm source JSON parses and has `report_type=training_run_factual_analysis`.
-- Confirm digest markers, headings, required fields, enums, status semantics, and command format.
-- Confirm archive writes match the output allowlist.
-- Confirm tracked history payloads use repository-relative paths and no private absolute paths.
-- Confirm `history_index.json` remains compact and excludes forbidden dense fields.
-- Confirm `tuning_map.md` is synced only from GPT digest fields.
-- Confirm diff scope contains only authorized archive outputs for archive execution.
+- Confirm `archive_type=single_run` and unique `archive_id`.
+- Confirm source JSON parses with `report_type=training_run_factual_analysis`.
+- Confirm digest markers, headings, fields, enums, status semantics, and command format.
+- Confirm writes match the output allowlist.
+- Confirm tracked paths are repository-relative and non-private.
+- Confirm `history_index.json` is compact and excludes dense fields.
+- Confirm `tuning_map.md` sync uses GPT digest fields only.
+- Confirm diff scope matches authorized outputs.
 
 ## 9. Blockers
 
@@ -307,16 +293,13 @@ Required blocker labels:
 
 Block when:
 
-- Required input is missing, inaccessible, ambiguous, or unparsable.
+- Input is missing, inaccessible, ambiguous, or unparsable.
 - `archive_type` is not `single_run`.
-- `archive_id` already exists without explicit replacement authorization.
-- Source JSON parse or `report_type` validation fails.
-- Digest marker, heading, field, enum, status semantics, command, or baseline contract validation fails.
-- Requested writes exceed the output allowlist.
-- Training source code, training outputs, existing archives, checkpoints, weights, logs, CSVs, plots, trajectories, or binaries would be modified.
-- Any raw artifact, checkpoint, model weight, full log, full CSV, plot, trajectory, or binary artifact would be copied.
-- `archive_manifest.json` would be created.
-- Codex would need to infer, reinterpret, summarize, compress, expand, rewrite, or decide GPT-owned digest content.
+- `archive_id` already exists without replacement authorization.
+- Source parse or `report_type` check fails.
+- Digest marker, heading, field, enum, status, command, or baseline validation fails.
+- Writes exceed the output allowlist or scope guard.
+- Codex would infer, decide, reinterpret, summarize, compress, expand, rewrite, or change GPT-owned content.
 - Tracked history payloads would contain private absolute paths.
 
 ## 10. Final Report
