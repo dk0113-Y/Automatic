@@ -155,12 +155,15 @@ Command format:
 - The command block must contain no `cd`, local absolute paths, placeholders, explanatory paragraphs, or nested fenced blocks.
 - If no launcher command is allowed, explicitly state why no command is provided.
 
-Do not output:
+In a normal user-facing GPT tuning review answer, do not output:
 - Codex prompt
 - archive digest
-- `tuning_review_payload` JSON
+- `tuning_review_payload` JSON; current archive handoff uses `tuning_review_md_digest`, not this legacy JSON interface
 - source-code modification task
 - history update task
+
+If the user explicitly asks for archive landing or a Codex archive prompt, generate the strict `tuning_review_md_digest` only through
+`docs/gpt_to_codex_prompting.md` and `.agents/skills/training-analysis-archive/SKILL.md`.
 
 ## 6. Boundaries
 
