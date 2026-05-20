@@ -13,7 +13,7 @@
 | Field | Value |
 | --- | --- |
 | current_train_side_reference_baseline | `stable_updates1_info31_obst020_epsend004_budget500k_decay240k_minreplay8000_seed0_20260519_110219` |
-| basis | Archived GPT review supported obst020 and updated the single-seed train-side reference baseline from epsend004. |
+| basis | Archived GPT review supported obst020 and updated the single-seed train-side reference baseline from epsend004; the obst015 review retained obst020. |
 | scope | `single_seed_train_side_reference_only` |
 | caveat | Not a global optimum, tuning-completion claim, paper-level conclusion, or cross-seed conclusion. |
 
@@ -48,7 +48,8 @@
 | updates1_info31 | `partially_supported` | No baseline update; info31 strong candidate/base. | Step penalty 0.015. |
 | step015 | `refuted` | No baseline update. | RewardInfoScale 3.05. |
 | info305 | `refuted` | No baseline update. | Obstacle weight 0.20 on info31. |
-| obst020 | `supported` | Baseline updated to obst020. | Latest active: obstacle weight 0.15 on obst020. |
+| obst020 | `supported` | Baseline updated to obst020. | Obstacle weight 0.15 on obst020. |
+| obst015 | `refuted` | Baseline remains obst020. | Latest active: budget extension on obst020. |
 
 ## 5. Refuted Directions
 
@@ -60,6 +61,7 @@
 | Terminal/timeout pressure on info32 | RewardTerminalBonus 22 and RewardTimeoutPenalty 10 were refuted on updates1_info32. |
 | Step-efficiency pressure on info31 | RewardStepPenalty 0.015 was refuted on info31. |
 | Total info-scale reduction from info31 | RewardInfoScale 3.05 was refuted and info305 did not update baseline. |
+| Obstacle-weight lowering below obst020 | RewardObstacleWeight 0.15 was refuted on the updated obst020 baseline. |
 
 ## 6. Supported / Retained Directions
 
@@ -70,13 +72,13 @@
 | LearnerUpdatesPerIter 1 branch | Bounded learner/update comparison made updates1 the strongest mechanism candidate but did not update baseline. |
 | updates1_info32 | Strong candidate context; did not update reference baseline. |
 | updates1_info31 | Strong candidate and current mechanism base; did not update reference baseline. |
-| RewardObstacleWeight 0.20 on info31 | Supported by obst020 and updated the single-seed train-side reference baseline. |
+| RewardObstacleWeight 0.20 on info31 | Supported by obst020, updated the single-seed train-side reference baseline, and was retained after obst015. |
 
 ## 7. Open Uncertainties
 
 | Uncertainty | Navigation status |
 | --- | --- |
-| Information-reward composition on obst020 | Active: test whether RewardObstacleWeight 0.15 improves completion and path efficiency without degrading coverage or information-gain behavior. |
+| Updated obst020 training budget | Active: determine whether the updated obst020 baseline is limited by the 500k training budget or can improve under a moderate extension. |
 | Reward pressure trade-off | Terminal, timeout, step-penalty, and total info-scale moves were refuted; use only GPT-explicit bounded alternatives. |
 | Learner/update dynamics | Candidate context remains useful if reward-composition tuning stalls; no active next surface unless GPT reopens it. |
 | Posthoc/final_probe mismatch | Context only; not baseline decision authority. |
@@ -86,7 +88,7 @@
 
 | Surface | Status from archived GPT review |
 | --- | --- |
-| `stable_updates1_info31_obst015_epsend004_budget500k_decay240k_minreplay8000_seed0` | Latest active candidate from obst020 review. Parameter change: `RewardObstacleWeight: 0.20 -> 0.15`; keep `RewardInfoScale=3.1`, step penalty 0.02, timeout penalty 8, terminal bonus 20, updates per iter 1, epsilon_end 0.04, decay 240k, and min replay 8000. Context: obst020 is the updated single-seed train-side reference baseline. |
+| `stable_updates1_info31_obst020_budget600k_epsend004_decay240k_minreplay8000_seed0` | Latest active candidate from obst015 review. Parameter change: `TotalEnvSteps: 500000 -> 600000`; keep `RewardObstacleWeight=0.20`, `RewardInfoScale=3.1`, step penalty 0.02, timeout penalty 8, terminal bonus 20, updates per iter 1, epsilon_end 0.04, decay 240k, and min replay 8000. Context: obst020 remains the updated single-seed train-side reference baseline. |
 
 ## 9. Maintenance Rule
 
