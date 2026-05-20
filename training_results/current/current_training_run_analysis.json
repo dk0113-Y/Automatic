@@ -2,8 +2,8 @@
   "schema_version": "1.0",
   "report_type": "training_run_factual_analysis",
   "generated_by": "codex",
-  "source_run_dir": "source_repo:outputs/stable_updates1_info31_obst020_budget600k_epsend004_decay240k_minreplay8000_seed0_20260519_195410",
-  "run_name": "stable_updates1_info31_obst020_budget600k_epsend004_decay240k_minreplay8000_seed0_20260519_195410",
+  "source_run_dir": "source_repo:outputs/stable_updates1_info31_obst020_turn045_epsend004_budget500k_decay240k_minreplay8000_seed0_20260520_193254",
+  "run_name": "stable_updates1_info31_obst020_turn045_epsend004_budget500k_decay240k_minreplay8000_seed0_20260520_193254",
   "files_inspected": [
     {
       "artifact_label": "logs/reproducibility_contract.json",
@@ -116,8 +116,8 @@
   },
   "train_side_monitoring": {
     "row_counts": {
-      "train_steps_rows": 1192,
-      "train_episodes_rows": 1403,
+      "train_steps_rows": 992,
+      "train_episodes_rows": 1112,
       "train_steps_empty": false,
       "train_episodes_empty": false,
       "parsed_counts_source": "csv_dict_reader"
@@ -129,96 +129,96 @@
       "nan_nonfinite_handling": "nonfinite_values_excluded_from_derived_delta_inputs"
     },
     "endpoint_metrics": {
-      "reward": 151.062042,
-      "coverage": 0.941713,
-      "success_rate": 0.84,
-      "episode_length": 379.799988,
-      "repeat_visit_ratio": 0.177869,
-      "timeout": 0.16,
-      "env_steps": 600000.0,
-      "train_episode_idx": 1403
+      "reward": 149.636353,
+      "coverage": 0.934997,
+      "success_rate": 0.81,
+      "episode_length": 355.829987,
+      "repeat_visit_ratio": 0.190103,
+      "timeout": 0.19,
+      "env_steps": 500000.0,
+      "train_episode_idx": 1112
     },
     "initial_to_endpoint_delta": {
-      "reward": 139.541551,
-      "coverage": 0.488913,
-      "success_rate": 0.84,
-      "episode_length": -220.200012,
-      "repeat_visit_ratio": -0.448943,
+      "reward": 136.945148,
+      "coverage": 0.482197,
+      "success_rate": 0.81,
+      "episode_length": -244.170013,
+      "repeat_visit_ratio": -0.43671,
       "initial_env_steps": 4512.0,
-      "endpoint_env_steps": 600000.0
+      "endpoint_env_steps": 500000.0
     },
     "late_stage_delta": {
       "window": {
         "definition": "last_25_percent_of_train_step_logging_rows_min_4_rows",
-        "row_count": 298,
+        "row_count": 248,
         "fraction_of_logging_points": 0.25,
-        "start_env_steps": 451504.0,
-        "end_env_steps": 600000.0
+        "start_env_steps": 376512.0,
+        "end_env_steps": 500000.0
       },
       "slope_per_1000_env_steps": {
-        "reward": 0.000186,
-        "coverage": 3.7e-05,
-        "success_rate": 0.000354,
-        "episode_length": 0.270178,
-        "repeat_visit_ratio": 0.000133,
-        "stall_trigger_count": 0.180186,
-        "zero_info_step_count": 0.220544,
-        "turn_180_count": 0.042749,
-        "recent_revisit_penalty_sum": -0.004372,
-        "terminal_bonus_sum": 0.007074
+        "reward": 0.053643,
+        "coverage": 8.4e-05,
+        "success_rate": 0.000711,
+        "episode_length": -0.394842,
+        "repeat_visit_ratio": -0.000162,
+        "stall_trigger_count": -0.2899,
+        "zero_info_step_count": -0.380247,
+        "turn_180_count": -0.004035,
+        "recent_revisit_penalty_sum": 0.003957,
+        "terminal_bonus_sum": 0.014229
       },
       "direction_summary": {
-        "reward": "flat",
+        "reward": "slightly_increasing",
         "coverage": "slightly_increasing",
         "success_rate": "slightly_increasing",
-        "repeat_visit_ratio": "slightly_increasing",
-        "episode_length": "increasing"
+        "repeat_visit_ratio": "slightly_decreasing",
+        "episode_length": "decreasing"
       }
     },
     "key_behavior_diagnostics": {
-      "zero_info_step_count": 214.570007,
-      "recent_revisit_trigger_count": 32.630001,
-      "stall_trigger_count": 163.179993,
-      "turn_ge_90_count": 112.720001,
-      "turn_135_count": 24.690001,
-      "turn_180_count": 21.58,
-      "timeout_flag": 0.16,
-      "turn_penalty_weight_sum": 60.189995
+      "zero_info_step_count": 193.880005,
+      "recent_revisit_trigger_count": 38.970001,
+      "stall_trigger_count": 145.970001,
+      "turn_ge_90_count": 118.459999,
+      "turn_135_count": 23.879999,
+      "turn_180_count": 27.65,
+      "timeout_flag": 0.19,
+      "turn_penalty_weight_sum": 65.879997
     },
     "derived_exploration_efficiency": {
-      "coverage_gain_per_step": 0.002902,
-      "weighted_info_gain_per_step": 0.148421,
-      "zero_info_rate": 0.495767,
-      "recent_revisit_rate": 0.077577,
-      "stall_rate": 0.356705,
-      "turn_burden_rate": 0.149692,
-      "timeout_rate": 0.16,
+      "coverage_gain_per_step": 0.00313,
+      "weighted_info_gain_per_step": 0.161213,
+      "zero_info_rate": 0.466139,
+      "recent_revisit_rate": 0.090044,
+      "stall_rate": 0.324625,
+      "turn_burden_rate": 0.167331,
+      "timeout_rate": 0.19,
       "metric_role": "diagnostic_only",
       "evidence_role": "not_standalone_superiority_evidence"
     },
     "reward_breakdown": {
-      "info_reward_sum": 149.410568,
-      "step_penalty_sum": -7.596,
-      "recent_revisit_penalty_sum": -3.263,
-      "turn_penalty_sum": -3.0095,
-      "timeout_penalty_sum": -1.28,
-      "terminal_bonus_sum": 16.799999
+      "info_reward_sum": 148.93454,
+      "step_penalty_sum": -7.116599,
+      "recent_revisit_penalty_sum": -3.897,
+      "turn_penalty_sum": -2.9646,
+      "timeout_penalty_sum": -1.52,
+      "terminal_bonus_sum": 16.200001
     },
     "reward_event_summary": {
-      "delta_empty_sum": 1446.410034,
-      "delta_obstacle_sum": 338.709991,
-      "empty_info_gain_sum": 46.040661,
-      "obstacle_info_gain_sum": 10.781475,
-      "weighted_obstacle_info_gain_sum": 2.156295,
-      "weighted_info_gain_sum": 48.196957,
-      "obstacle_info_contribution_ratio": 0.04472
+      "delta_empty_sum": 1442.130005,
+      "delta_obstacle_sum": 335.98999,
+      "empty_info_gain_sum": 45.904419,
+      "obstacle_info_gain_sum": 10.694893,
+      "weighted_obstacle_info_gain_sum": 2.138979,
+      "weighted_info_gain_sum": 48.0434,
+      "obstacle_info_contribution_ratio": 0.04462
     },
     "learner_replay_exploration_context": {
-      "loss": 3.335739,
-      "q_mean": 18.217377,
-      "target_q_mean": 18.763393,
-      "td_abs_mean": 3.706398,
-      "grad_norm": 29.486542,
+      "loss": 2.955168,
+      "q_mean": 15.141263,
+      "target_q_mean": 15.519592,
+      "td_abs_mean": 3.317739,
+      "grad_norm": 32.886871,
       "replay_size": 100000,
       "epsilon": 0.04,
       "batch_size": 128,
@@ -250,9 +250,9 @@
   },
   "configuration_and_runtime": {
     "budget_mode": "env_steps",
-    "total_env_steps": 600000,
-    "final_env_steps": 600000,
-    "total_train_episodes_completed": 1397,
+    "total_env_steps": 500000,
+    "final_env_steps": 500000,
+    "total_train_episodes_completed": 1106,
     "epsilon_decay_steps": 240000,
     "epsilon_end": 0.04,
     "min_replay_size": 8000,
@@ -261,7 +261,7 @@
       "reward_obstacle_weight": 0.2,
       "reward_step_penalty": 0.02,
       "reward_revisit_penalty": 0.1,
-      "reward_turn_penalty_scale": 0.05,
+      "reward_turn_penalty_scale": 0.045,
       "reward_timeout_penalty": 8.0,
       "reward_terminal_bonus": 20.0
     },
@@ -292,8 +292,8 @@
       "actual": "cuda:0"
     },
     "runtime": {
-      "total_runtime_sec": 12099.283634,
-      "total_runtime_hms": "03:21:39"
+      "total_runtime_sec": 9666.144112,
+      "total_runtime_hms": "02:41:06"
     },
     "source_git": {
       "branch": "main",
@@ -308,7 +308,7 @@
   "missing_artifacts": [],
   "parse_failures": [],
   "unverified_items": [
-    "source_repo_had_preexisting_untracked_directory_before_analysis; source artifacts read_only"
+    "source_repo_had_preexisting_untracked_or_modified_paths_before_analysis; source artifacts read_only"
   ],
   "forbidden_artifact_findings": [],
   "factual_summary_status": "factual_summary_ready",
