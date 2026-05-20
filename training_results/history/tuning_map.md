@@ -13,7 +13,7 @@
 | Field | Value |
 | --- | --- |
 | current_train_side_reference_baseline | `stable_updates1_info31_obst020_epsend004_budget500k_decay240k_minreplay8000_seed0_20260519_110219` |
-| basis | Archived GPT review supported obst020 and updated the single-seed train-side reference baseline from epsend004; the obst015 review retained obst020. |
+| basis | Archived GPT review supported obst020 and updated the single-seed train-side reference baseline from epsend004; obst015 and obst020_600k reviews retained obst020. |
 | scope | `single_seed_train_side_reference_only` |
 | caveat | Not a global optimum, tuning-completion claim, paper-level conclusion, or cross-seed conclusion. |
 
@@ -49,13 +49,14 @@
 | step015 | `refuted` | No baseline update. | RewardInfoScale 3.05. |
 | info305 | `refuted` | No baseline update. | Obstacle weight 0.20 on info31. |
 | obst020 | `supported` | Baseline updated to obst020. | Obstacle weight 0.15 on obst020. |
-| obst015 | `refuted` | Baseline remains obst020. | Latest active: budget extension on obst020. |
+| obst015 | `refuted` | Baseline remains obst020. | Budget extension on obst020. |
+| obst020_600k | `refuted` | Baseline remains obst020 500k. | Latest active: turn penalty 0.045 on obst020. |
 
 ## 5. Refuted Directions
 
 | Direction group | Archived GPT conclusion |
 | --- | --- |
-| Budget extension and epsilon schedule search | 650k, epsilon_end 0.03, epsilon_end 0.035, and decay 300k were refuted or did not update baseline. |
+| Budget extension and epsilon schedule search | 650k, obst020 600k, epsilon_end 0.03, epsilon_end 0.035, and decay 300k were refuted or did not update baseline. |
 | Revisit/turn shaping increases | RewardRevisitPenalty 0.12 and RewardTurnPenaltyScale 0.06 were refuted under epsend004 core. |
 | Learner learning-rate reduction | LearningRate 0.000075 was refuted under epsend004 core. |
 | Terminal/timeout pressure on info32 | RewardTerminalBonus 22 and RewardTimeoutPenalty 10 were refuted on updates1_info32. |
@@ -72,13 +73,13 @@
 | LearnerUpdatesPerIter 1 branch | Bounded learner/update comparison made updates1 the strongest mechanism candidate but did not update baseline. |
 | updates1_info32 | Strong candidate context; did not update reference baseline. |
 | updates1_info31 | Strong candidate and current mechanism base; did not update reference baseline. |
-| RewardObstacleWeight 0.20 on info31 | Supported by obst020, updated the single-seed train-side reference baseline, and was retained after obst015. |
+| RewardObstacleWeight 0.20 on info31 | Supported by obst020, updated the single-seed train-side reference baseline, and was retained after obst015 and obst020_600k. |
 
 ## 7. Open Uncertainties
 
 | Uncertainty | Navigation status |
 | --- | --- |
-| Updated obst020 training budget | Active: determine whether the updated obst020 baseline is limited by the 500k training budget or can improve under a moderate extension. |
+| Local maneuverability on obst020 | Active: test whether a small RewardTurnPenaltyScale decrease reduces stall, zero-info, timeout, and turn burden without damaging coverage or completion quality. |
 | Reward pressure trade-off | Terminal, timeout, step-penalty, and total info-scale moves were refuted; use only GPT-explicit bounded alternatives. |
 | Learner/update dynamics | Candidate context remains useful if reward-composition tuning stalls; no active next surface unless GPT reopens it. |
 | Posthoc/final_probe mismatch | Context only; not baseline decision authority. |
@@ -88,7 +89,7 @@
 
 | Surface | Status from archived GPT review |
 | --- | --- |
-| `stable_updates1_info31_obst020_budget600k_epsend004_decay240k_minreplay8000_seed0` | Latest active candidate from obst015 review. Parameter change: `TotalEnvSteps: 500000 -> 600000`; keep `RewardObstacleWeight=0.20`, `RewardInfoScale=3.1`, step penalty 0.02, timeout penalty 8, terminal bonus 20, updates per iter 1, epsilon_end 0.04, decay 240k, and min replay 8000. Context: obst020 remains the updated single-seed train-side reference baseline. |
+| `stable_updates1_info31_obst020_turn045_epsend004_budget500k_decay240k_minreplay8000_seed0` | Latest active candidate from obst020_600k review. Parameter change: `RewardTurnPenaltyScale: 0.05 -> 0.045`; keep `RewardObstacleWeight=0.20`, `RewardInfoScale=3.1`, step penalty 0.02, timeout penalty 8, terminal bonus 20, updates per iter 1, 500k budget, epsilon_end 0.04, decay 240k, and min replay 8000. Context: obst020 remains the updated single-seed train-side reference baseline. |
 
 ## 9. Maintenance Rule
 
