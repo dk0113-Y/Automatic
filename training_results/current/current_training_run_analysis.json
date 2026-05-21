@@ -2,8 +2,8 @@
   "schema_version": "1.0",
   "report_type": "training_run_factual_analysis",
   "generated_by": "codex",
-  "source_run_dir": "source_repo:outputs/stable_updates1_info31_obst020_bs192_epsend004_budget500k_decay240k_minreplay8000_seed0_20260521_142144",
-  "run_name": "stable_updates1_info31_obst020_bs192_epsend004_budget500k_decay240k_minreplay8000_seed0_20260521_142144",
+  "source_run_dir": "source_repo:outputs/stable_updates1_info31_obst020_tw135075_tw180110_epsend004_budget500k_decay240k_minreplay8000_seed0_20260521_180657",
+  "run_name": "stable_updates1_info31_obst020_tw135075_tw180110_epsend004_budget500k_decay240k_minreplay8000_seed0_20260521_180657",
   "files_inspected": [
     {
       "artifact_label": "logs/reproducibility_contract.json",
@@ -68,16 +68,20 @@
   ],
   "commands_run": [
     {
+      "label": "selected_skill_contract",
+      "status": "passed"
+    },
+    {
       "label": "source_dir_resolution",
       "status": "passed",
       "short_result": "source_run_read_from_sibling_workspace_with_sanitized_label"
     },
     {
-      "label": "artifact_presence_check",
+      "label": "artifact_presence_parseability_check",
       "status": "passed"
     },
     {
-      "label": "compact_fact_extraction",
+      "label": "compact_train_side_fact_extraction",
       "status": "passed"
     },
     {
@@ -116,13 +120,13 @@
     },
     "source_git": {
       "branch": "main",
-      "commit": "0d0826d4b99164b44fcb34edbe01f5a09b255d28"
+      "commit": "40d93536415e1a7acbbbb1348812d1ebf041066e"
     }
   },
   "train_side_monitoring": {
     "row_counts": {
       "train_steps_rows": 992,
-      "train_episodes_rows": 1095,
+      "train_episodes_rows": 1132,
       "train_steps_empty": false,
       "train_episodes_empty": false,
       "parsed_counts_source": "csv_dict_reader"
@@ -134,21 +138,21 @@
       "nan_nonfinite_handling": "nonfinite_values_excluded_from_derived_delta_inputs"
     },
     "endpoint_metrics": {
-      "reward": 150.976135,
-      "coverage": 0.93871,
-      "success_rate": 0.83,
-      "episode_length": 364.339996,
-      "repeat_visit_ratio": 0.176295,
-      "timeout": 0.17,
+      "reward": 152.269302,
+      "coverage": 0.940561,
+      "success_rate": 0.82,
+      "episode_length": 350.459991,
+      "repeat_visit_ratio": 0.161394,
+      "timeout": 0.18,
       "env_steps": 500000,
-      "train_episode_idx": 1095
+      "train_episode_idx": 1132
     },
     "initial_to_endpoint_delta": {
-      "reward": 139.455643,
-      "coverage": 0.48591,
-      "success_rate": 0.83,
-      "episode_length": -235.660004,
-      "repeat_visit_ratio": -0.450517,
+      "reward": 141.79905,
+      "coverage": 0.487761,
+      "success_rate": 0.82,
+      "episode_length": -249.540009,
+      "repeat_visit_ratio": -0.465418,
       "initial_env_steps": 4512,
       "endpoint_env_steps": 500000
     },
@@ -161,16 +165,16 @@
         "end_env_steps": 500000
       },
       "slope_per_1000_env_steps": {
-        "reward": 0.046251,
-        "coverage": 5.3e-05,
-        "success_rate": 0.000508,
-        "episode_length": -0.026976,
-        "repeat_visit_ratio": -0.000162,
-        "stall_trigger_count": 0.03017,
-        "zero_info_step_count": -0.039352,
-        "turn_180_count": -0.127626,
-        "recent_revisit_penalty_sum": 0.014687,
-        "terminal_bonus_sum": 0.01016
+        "reward": 0.057723,
+        "coverage": 4.2e-05,
+        "success_rate": 0.001021,
+        "episode_length": -0.312608,
+        "repeat_visit_ratio": -0.000326,
+        "stall_trigger_count": -0.272189,
+        "zero_info_step_count": -0.304282,
+        "turn_180_count": -0.029434,
+        "recent_revisit_penalty_sum": 0.006648,
+        "terminal_bonus_sum": 0.020422
       },
       "direction_summary": {
         "reward": "increasing",
@@ -181,52 +185,52 @@
       }
     },
     "key_behavior_diagnostics": {
-      "zero_info_step_count": 198.389999,
-      "recent_revisit_trigger_count": 33.68,
-      "stall_trigger_count": 150.940002,
-      "turn_ge_90_count": 129.889999,
-      "turn_135_count": 31.27,
-      "turn_180_count": 22.719999,
-      "timeout_flag": 0.17,
-      "turn_penalty_weight_sum": 68.866661
+      "zero_info_step_count": 189.639999,
+      "recent_revisit_trigger_count": 25.969999,
+      "stall_trigger_count": 142.619995,
+      "turn_ge_90_count": 97.800003,
+      "turn_135_count": 22.809999,
+      "turn_180_count": 16.07,
+      "timeout_flag": 0.18,
+      "turn_penalty_weight_sum": 54.424503
     },
     "derived_exploration_efficiency": {
-      "coverage_gain_per_step": 0.00309,
-      "weighted_info_gain_per_step": 0.159264,
-      "zero_info_rate": 0.462424,
-      "recent_revisit_rate": 0.081715,
-      "stall_rate": 0.330577,
-      "turn_burden_rate": 0.179087,
-      "timeout_rate": 0.17,
+      "coverage_gain_per_step": 0.003291,
+      "weighted_info_gain_per_step": 0.169048,
+      "zero_info_rate": 0.449988,
+      "recent_revisit_rate": 0.062644,
+      "stall_rate": 0.313742,
+      "turn_burden_rate": 0.144224,
+      "timeout_rate": 0.18,
       "metric_role": "diagnostic_only",
       "evidence_role": "not_standalone_superiority_evidence"
     },
     "reward_breakdown": {
-      "info_reward_sum": 149.83429,
-      "step_penalty_sum": -7.2868,
-      "recent_revisit_penalty_sum": -3.368,
-      "turn_penalty_sum": -3.443333,
-      "timeout_penalty_sum": -1.36,
-      "terminal_bonus_sum": 16.6
+      "info_reward_sum": 149.636703,
+      "step_penalty_sum": -7.0092,
+      "recent_revisit_penalty_sum": -2.597,
+      "turn_penalty_sum": -2.721225,
+      "timeout_penalty_sum": -1.44,
+      "terminal_bonus_sum": 16.4
     },
     "reward_event_summary": {
-      "delta_empty_sum": 1451.670044,
-      "delta_obstacle_sum": 333.880005,
-      "empty_info_gain_sum": 46.208096,
-      "obstacle_info_gain_sum": 10.627729,
-      "weighted_obstacle_info_gain_sum": 2.125546,
-      "weighted_info_gain_sum": 48.333637,
-      "obstacle_info_contribution_ratio": 0.043988
+      "delta_empty_sum": 1449.390015,
+      "delta_obstacle_sum": 335.269989,
+      "empty_info_gain_sum": 46.135521,
+      "obstacle_info_gain_sum": 10.671976,
+      "weighted_obstacle_info_gain_sum": 2.134395,
+      "weighted_info_gain_sum": 48.269917,
+      "obstacle_info_contribution_ratio": 0.044289
     },
     "learner_replay_exploration_context": {
-      "loss": 2.531457,
-      "q_mean": 15.760002,
-      "target_q_mean": 15.896925,
-      "td_abs_mean": 2.862999,
-      "grad_norm": 28.545757,
+      "loss": 2.69205,
+      "q_mean": 15.653587,
+      "target_q_mean": 14.855642,
+      "td_abs_mean": 3.028902,
+      "grad_norm": 27.642843,
       "replay_size": 100000,
       "epsilon": 0.04,
-      "batch_size": 192,
+      "batch_size": 128,
       "replay_capacity": 100000,
       "n_step": 3,
       "gamma": 0.99,
@@ -257,7 +261,7 @@
     "budget_mode": "env_steps",
     "total_env_steps": 500000,
     "final_env_steps": 500000,
-    "total_train_episodes_completed": 1089,
+    "total_train_episodes_completed": 1126,
     "epsilon_decay_steps": 240000,
     "epsilon_end": 0.04,
     "min_replay_size": 8000,
@@ -267,11 +271,15 @@
       "reward_step_penalty": 0.02,
       "reward_revisit_penalty": 0.1,
       "reward_turn_penalty_scale": 0.05,
+      "reward_turn_weight_45": 0.0,
+      "reward_turn_weight_90": 0.3333333333333333,
+      "reward_turn_weight_135": 0.75,
+      "reward_turn_weight_180": 1.1,
       "reward_timeout_penalty": 8.0,
       "reward_terminal_bonus": 20.0
     },
     "replay_learner_update_config": {
-      "batch_size": 192,
+      "batch_size": 128,
       "replay_capacity": 100000,
       "n_step": 3,
       "gamma": 0.99,
@@ -293,18 +301,18 @@
     "train_side_only_tuning": true,
     "test_side_evaluation_status": "skipped_train_side_only_tuning",
     "skipped_test_side_evaluation_reason": "train_side_only_tuning",
-    "formal_final_object_role": "train_side_tuning_endpoint",
+    "formal_final_object_role": "not_applicable_for_train_side_tuning",
     "device": {
       "requested": "cuda",
       "actual": "cuda:0"
     },
     "runtime": {
-      "total_runtime_sec": 9758.887931,
-      "total_runtime_hms": "02:42:39"
+      "total_runtime_sec": 9566.167231,
+      "total_runtime_hms": "02:39:26"
     },
     "source_git": {
       "branch": "main",
-      "commit": "0d0826d4b99164b44fcb34edbe01f5a09b255d28"
+      "commit": "40d93536415e1a7acbbbb1348812d1ebf041066e"
     },
     "strict_backend_status": {
       "strict_reproducibility": true,
@@ -314,9 +322,7 @@
   },
   "missing_artifacts": [],
   "parse_failures": [],
-  "unverified_items": [
-    "source_repo_had_preexisting_untracked_or_modified_paths_before_analysis; source artifacts read_only"
-  ],
+  "unverified_items": [],
   "forbidden_artifact_findings": [],
   "factual_summary_status": "factual_summary_ready",
   "tuning_recommendation_provided": false
