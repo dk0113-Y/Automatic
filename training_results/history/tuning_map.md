@@ -13,7 +13,7 @@
 | Field | Value |
 | --- | --- |
 | current_train_side_reference_baseline | `stable_updates1_info31_obst020_epsend004_budget500k_decay240k_minreplay8000_seed0_20260519_110219` |
-| basis | Archived GPT review supported obst020 and updated the single-seed train-side reference baseline from epsend004; obst015, obst020_600k, turn045, turn055, and nstep4 reviews retained obst020. |
+| basis | Archived GPT review supported obst020 and updated the single-seed train-side reference baseline from epsend004; obst015, obst020_600k, turn045, turn055, nstep4, and bs192 reviews retained obst020. |
 | scope | `single_seed_train_side_reference_only` |
 | caveat | Not a global optimum, tuning-completion claim, paper-level conclusion, or cross-seed conclusion. |
 
@@ -53,7 +53,8 @@
 | obst020_600k | `refuted` | Baseline remains obst020 500k. | Turn penalty 0.045 on obst020. |
 | turn045 | `refuted` | Baseline remains obst020 500k. | Turn penalty 0.055 on obst020. |
 | turn055 | `refuted` | Baseline remains obst020 500k. | NStep 4 on obst020. |
-| nstep4 | `refuted` | Baseline remains obst020 500k. | Latest active: BatchSize 192 with NStep restored to 3 on obst020. |
+| nstep4 | `refuted` | Baseline remains obst020 500k. | BatchSize 192 with NStep restored to 3 on obst020. |
+| bs192 | `partially_supported` | Baseline remains obst020 500k. | Latest active: angle-specific 135/180 turn weights on obst020. |
 
 ## 5. Refuted Directions
 
@@ -68,6 +69,7 @@
 | Obstacle-weight lowering below obst020 | RewardObstacleWeight 0.15 was refuted on the updated obst020 baseline. |
 | Turn-penalty bracketing on obst020 | RewardTurnPenaltyScale 0.045 and 0.055 were refuted on the updated obst020 baseline. |
 | N-step horizon increase on obst020 | NStep 4 was refuted on the updated obst020 baseline. |
+| Batch-level learner stability on obst020 | BatchSize 192 partially supported learner-noise reduction but did not update the baseline. |
 
 ## 6. Supported / Retained Directions
 
@@ -78,13 +80,13 @@
 | LearnerUpdatesPerIter 1 branch | Bounded learner/update comparison made updates1 the strongest mechanism candidate but did not update baseline. |
 | updates1_info32 | Strong candidate context; did not update reference baseline. |
 | updates1_info31 | Strong candidate and current mechanism base; did not update reference baseline. |
-| RewardObstacleWeight 0.20 on info31 | Supported by obst020, updated the single-seed train-side reference baseline, and was retained after obst015, obst020_600k, turn045, turn055, and nstep4. |
+| RewardObstacleWeight 0.20 on info31 | Supported by obst020, updated the single-seed train-side reference baseline, and was retained after obst015, obst020_600k, turn045, turn055, nstep4, and bs192. |
 
 ## 7. Open Uncertainties
 
 | Uncertainty | Navigation status |
 | --- | --- |
-| Learner/update stability on obst020 | Active: determine whether BatchSize 192 with NStep restored to 3 can improve residual timeout, repeat visits, zero-info, and stall versus longer n-step return propagation or reward-coefficient micro-bracketing. |
+| Angle-specific turn shaping on obst020 | Active: determine whether higher 135/180 turn weights can reduce persistent turn burden, recent revisit, stall, episode_length, and timeout while preserving 45/90 maneuverability. |
 | Reward pressure trade-off | Terminal, timeout, step-penalty, and total info-scale moves were refuted; use only GPT-explicit bounded alternatives. |
 | Learner/update dynamics | Candidate context remains useful if reward-composition tuning stalls; no active next surface unless GPT reopens it. |
 | Posthoc/final_probe mismatch | Context only; not baseline decision authority. |
@@ -94,7 +96,7 @@
 
 | Surface | Status from archived GPT review |
 | --- | --- |
-| `stable_updates1_info31_obst020_bs192_epsend004_budget500k_decay240k_minreplay8000_seed0` | Latest active candidate from nstep4 review. Parameter change: `BatchSize: 128 -> 192; restore NStep=3`; keep `RewardObstacleWeight=0.20`, `RewardInfoScale=3.1`, `RewardTurnPenaltyScale=0.05`, step penalty 0.02, timeout penalty 8, terminal bonus 20, updates per iter 1, 500k budget, epsilon_end 0.04, decay 240k, and min replay 8000. Context: obst020 remains the updated single-seed train-side reference baseline. |
+| `stable_updates1_info31_obst020_tw135075_tw180110_epsend004_budget500k_decay240k_minreplay8000_seed0` | Latest active candidate from bs192 review. Parameter change: `RewardTurnWeight135: 0.6666666666666666 -> 0.75; RewardTurnWeight180: 1.0 -> 1.10`; keep `RewardTurnWeight45=0.0`, `RewardTurnWeight90=0.3333333333333333`, `RewardTurnPenaltyScale=0.05`, `RewardObstacleWeight=0.20`, `RewardInfoScale=3.1`, NStep 3, BatchSize 128, step penalty 0.02, timeout penalty 8, terminal bonus 20, updates per iter 1, 500k budget, epsilon_end 0.04, decay 240k, and min replay 8000. Context: obst020 remains the updated single-seed train-side reference baseline. |
 
 ## 9. Maintenance Rule
 
