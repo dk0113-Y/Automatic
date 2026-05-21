@@ -58,6 +58,7 @@ State/network structure affects coverage, information gain, revisit behavior, tu
 | `RewardTimeoutPenalty` | Penalizes max-step timeout. | Timeout flag/rate, episode length, success_rate, coverage. | Excessive timeout pressure can distort long exploration episodes. |
 | `RewardRevisitPenalty` | Penalizes recent-position revisits over the trajectory-history horizon. | `recent_revisit_trigger_count`, `recent_revisit_penalty_sum`, repeat visit ratio, stall. | Excessive revisit pressure can discourage necessary local maneuvering. |
 | `RewardTurnPenaltyScale` | Scales angle-weighted turn penalty. | `turn_penalty_sum`, `turn_penalty_weight_sum`, turn burden, episode length. | Excessive turn pressure can reduce maneuverability around obstacles or frontiers. |
+| `RewardTurnWeight45` / `RewardTurnWeight90` / `RewardTurnWeight135` / `RewardTurnWeight180` | Tune angle-specific weights inside the existing turn penalty formula. | `turn_penalty_weight_sum`, turn burden, episode length, local maneuverability diagnostics. | Excessive angle-specific pressure can over-constrain necessary local turns. |
 | `RewardObstacleWeight` | Weights obstacle reveal contribution inside information gain. | `obstacle_info_gain_sum`, `weighted_obstacle_info_gain_sum`, `obstacle_info_contribution_ratio`. | Excessive obstacle weighting can shift reward toward obstacle reveal over empty-space coverage. |
 
 Diagnostic interpretation facts:
@@ -84,7 +85,7 @@ Launcher-ready knobs:
 | Run/execution | `RunName`, `Device`, `PythonExecutable`, `TrainSideOnlyTuning`, `DryRun` |
 | Budget/seeding | `TotalEnvSteps`, `Seed`, `FixedTrainEpisodeSeedBase`, `FixedFinalProbeSeedBase`, `FinalGreedyEpisodes` |
 | Exploration schedule | `EpsilonDecaySteps`, `EpsilonEnd` |
-| Reward coefficients | `RewardRevisitPenalty`, `RewardTurnPenaltyScale`, `RewardTimeoutPenalty`, `RewardStepPenalty`, `RewardTerminalBonus`, `RewardInfoScale`, `RewardObstacleWeight` |
+| Reward coefficients | `RewardRevisitPenalty`, `RewardTurnPenaltyScale`, `RewardTurnWeight45`, `RewardTurnWeight90`, `RewardTurnWeight135`, `RewardTurnWeight180`, `RewardTimeoutPenalty`, `RewardStepPenalty`, `RewardTerminalBonus`, `RewardInfoScale`, `RewardObstacleWeight` |
 | Replay/learner | `BatchSize`, `ReplayCapacity`, `MinReplaySize`, `NStep`, `Gamma`, `LearningRate`, `TargetUpdateInterval`, `GradClipNorm` |
 | Rollout/update cadence | `CollectStepsPerIter`, `LearnerUpdatesPerIter`, `TrainEveryEnvSteps` |
 
@@ -109,7 +110,7 @@ Full logs, full CSVs, checkpoints, plots, trajectories, binary artifacts, and ra
 | --- | --- | --- |
 | Launcher-ready knobs | Stable launcher groups in section 7. | Use only exposed launcher parameters in launcher-only plans. |
 | CLI / `TrainConfig` knobs not exposed by stable launcher | `rows`, `cols`, `obstacle_ratio`, `scan_radius`, `max_accessible_blocks`, `max_entries_per_block`, posthoc interval/window fields. | Need supported CLI/config path or bounded launcher/config exposure. |
-| Config-supported reward fields not exposed by stable launcher | `reward_turn_weight_45`, `reward_turn_weight_90`, `reward_turn_weight_135`, `reward_turn_weight_180`. | Do not invent stable launcher flags. |
+| Angle-specific turn shaping | `RewardTurnWeight45`, `RewardTurnWeight90`, `RewardTurnWeight135`, `RewardTurnWeight180` map to existing `reward_turn_weight_45`, `reward_turn_weight_90`, `reward_turn_weight_135`, `reward_turn_weight_180` config fields. | Launcher-ready bounded tuning of angle-specific turn penalty weights; no reward mechanism rewrite. |
 | Config-only fields without direct CLI flag | `trajectory_history_steps`, `max_episode_steps`, `coverage_stop_threshold`, `weight_decay`. | Need bounded config/code exposure. |
 | Runtime/profiling toggles | AMP, inference AMP, `torch.compile`, channels-last, TF32, cuDNN benchmark, timing/profiling, plot export, trajectory export. | Runtime speed alone is not system-performance superiority. |
 | Method-level redesign boundary | Architecture, representation, semantic layer redesign, replay algorithm redesign beyond exposed config knobs, reward mechanism rewrite beyond coefficient tuning, action space changes, environment semantics changes. | Requires explicit discussion/approval; no unattended training command. |
