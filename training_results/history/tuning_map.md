@@ -13,7 +13,7 @@
 | Field | Value |
 | --- | --- |
 | current_train_side_reference_baseline | `stable_updates1_info31_obst020_epsend004_budget500k_decay240k_minreplay8000_seed0_20260519_110219` |
-| basis | Archived GPT review supported obst020 and updated the single-seed train-side reference baseline from epsend004; obst015, obst020_600k, and turn045 reviews retained obst020. |
+| basis | Archived GPT review supported obst020 and updated the single-seed train-side reference baseline from epsend004; obst015, obst020_600k, turn045, and turn055 reviews retained obst020. |
 | scope | `single_seed_train_side_reference_only` |
 | caveat | Not a global optimum, tuning-completion claim, paper-level conclusion, or cross-seed conclusion. |
 
@@ -51,7 +51,8 @@
 | obst020 | `supported` | Baseline updated to obst020. | Obstacle weight 0.15 on obst020. |
 | obst015 | `refuted` | Baseline remains obst020. | Budget extension on obst020. |
 | obst020_600k | `refuted` | Baseline remains obst020 500k. | Turn penalty 0.045 on obst020. |
-| turn045 | `refuted` | Baseline remains obst020 500k. | Latest active: turn penalty 0.055 on obst020. |
+| turn045 | `refuted` | Baseline remains obst020 500k. | Turn penalty 0.055 on obst020. |
+| turn055 | `refuted` | Baseline remains obst020 500k. | Latest active: NStep 4 on obst020. |
 
 ## 5. Refuted Directions
 
@@ -64,7 +65,7 @@
 | Step-efficiency pressure on info31 | RewardStepPenalty 0.015 was refuted on info31. |
 | Total info-scale reduction from info31 | RewardInfoScale 3.05 was refuted and info305 did not update baseline. |
 | Obstacle-weight lowering below obst020 | RewardObstacleWeight 0.15 was refuted on the updated obst020 baseline. |
-| Turn-penalty lowering on obst020 | RewardTurnPenaltyScale 0.045 was refuted on the updated obst020 baseline. |
+| Turn-penalty bracketing on obst020 | RewardTurnPenaltyScale 0.045 and 0.055 were refuted on the updated obst020 baseline. |
 
 ## 6. Supported / Retained Directions
 
@@ -75,13 +76,13 @@
 | LearnerUpdatesPerIter 1 branch | Bounded learner/update comparison made updates1 the strongest mechanism candidate but did not update baseline. |
 | updates1_info32 | Strong candidate context; did not update reference baseline. |
 | updates1_info31 | Strong candidate and current mechanism base; did not update reference baseline. |
-| RewardObstacleWeight 0.20 on info31 | Supported by obst020, updated the single-seed train-side reference baseline, and was retained after obst015, obst020_600k, and turn045. |
+| RewardObstacleWeight 0.20 on info31 | Supported by obst020, updated the single-seed train-side reference baseline, and was retained after obst015, obst020_600k, turn045, and turn055. |
 
 ## 7. Open Uncertainties
 
 | Uncertainty | Navigation status |
 | --- | --- |
-| Local maneuverability on obst020 | Active: test whether RewardTurnPenaltyScale 0.05 is the local balance point or whether a small increase to 0.055 can suppress inefficient turning and revisits without over-constraining obstacle/frontier maneuvering. |
+| Replay/credit assignment on obst020 | Active: determine whether NStep 4 can improve residual timeout, repeat visits, zero-info, and stall versus additional reward-coefficient tuning. |
 | Reward pressure trade-off | Terminal, timeout, step-penalty, and total info-scale moves were refuted; use only GPT-explicit bounded alternatives. |
 | Learner/update dynamics | Candidate context remains useful if reward-composition tuning stalls; no active next surface unless GPT reopens it. |
 | Posthoc/final_probe mismatch | Context only; not baseline decision authority. |
@@ -91,7 +92,7 @@
 
 | Surface | Status from archived GPT review |
 | --- | --- |
-| `stable_updates1_info31_obst020_turn055_epsend004_budget500k_decay240k_minreplay8000_seed0` | Latest active candidate from turn045 review. Parameter change: `RewardTurnPenaltyScale: 0.05 -> 0.055`; keep `RewardObstacleWeight=0.20`, `RewardInfoScale=3.1`, step penalty 0.02, timeout penalty 8, terminal bonus 20, updates per iter 1, 500k budget, epsilon_end 0.04, decay 240k, and min replay 8000. Context: obst020 remains the updated single-seed train-side reference baseline. |
+| `stable_updates1_info31_obst020_nstep4_epsend004_budget500k_decay240k_minreplay8000_seed0` | Latest active candidate from turn055 review. Parameter change: `NStep: 3 -> 4`; keep `RewardObstacleWeight=0.20`, `RewardInfoScale=3.1`, `RewardTurnPenaltyScale=0.05`, step penalty 0.02, timeout penalty 8, terminal bonus 20, updates per iter 1, 500k budget, epsilon_end 0.04, decay 240k, and min replay 8000. Context: obst020 remains the updated single-seed train-side reference baseline. |
 
 ## 9. Maintenance Rule
 
