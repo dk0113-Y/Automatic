@@ -1,7 +1,7 @@
 # Automatic
 
-Summer internship portfolio repository for a GPT / Codex / AI-assisted
-engineering workflow.
+Documentation and evidence-control repository for a GPT / Codex /
+AI-assisted engineering workflow.
 
 `Automatic` is a lightweight control-plane repository. It packages prompt
 interfaces, Codex skill contracts, structured training-analysis digests, and
@@ -14,8 +14,8 @@ name preserved for history compatibility.
 
 ## Project Overview
 
-This repository shows how I organized an AI-assisted research and development
-workflow around a training project:
+This repository organizes an AI-assisted research and development workflow
+around a training project:
 
 - GPT is used for tuning review, evidence interpretation, and next-step
   planning.
@@ -24,8 +24,8 @@ workflow around a training project:
 - Tracked JSON and Markdown records keep the discussion grounded in compact
   evidence instead of raw logs, checkpoints, or local run folders.
 
-The repository is designed to be readable in one or two minutes by a reviewer
-who wants to understand the workflow, not rerun the training system.
+The repository exposes the workflow and its evidence boundaries without
+duplicating the external training system.
 
 ## Motivation
 
@@ -46,7 +46,7 @@ review and risky to publish.
 
 This repository is:
 
-- a portfolio entry point for an AI-assisted engineering workflow;
+- a control-plane entry point for an AI-assisted engineering workflow;
 - a prompt-packaging and task-interface repository;
 - a Codex skill contract repository;
 - a compact training-analysis evidence archive;
@@ -80,7 +80,7 @@ also excludes common generated outputs such as `outputs/`, `checkpoints/`,
 
 | Path | Role |
 | --- | --- |
-| `README.md` | Public portfolio overview and reviewer guide. |
+| `README.md` | Project overview and repository guide. |
 | `.agents/skills/training-run-factual-analysis/` | Codex factual extraction contract. |
 | `.agents/skills/training-analysis-archive/` | Codex archive landing contract. |
 | `docs/gpt_to_codex_prompting.md` | Prompt shell for turning GPT decisions into bounded Codex tasks. |
@@ -199,7 +199,7 @@ training repository.
 `Automatic`
 
 - Owns prompt interfaces, Codex skills, compact evidence digests, history
-  index, tuning map, and portfolio documentation.
+  index, tuning map, and workflow documentation.
 
 `agent_build`
 
@@ -227,51 +227,21 @@ Limitations:
   global performance claim;
 - older historical files may retain the earlier internal name `Automatic_2`.
 
-## Internship Skill Mapping
+## Engineering Coverage
 
-AI-assisted R&D workflow design:
+| Area | Repository evidence |
+| --- | --- |
+| AI-assisted R&D workflow | The GPT/Codex role split is defined across `docs/`, `.agents/skills/`, and `training_results/`. |
+| Prompt interfaces | `docs/gpt_to_codex_prompting.md` defines bounded task shells, fixed fields, and validation lines. |
+| Codex task contracts | `.agents/skills/` turns repeated operations into explicit execution procedures. |
+| Structured task decomposition | Factual extraction, GPT review, archive landing, history indexing, and tuning-map synchronization are separated. |
+| Evidence records | `training_results/current/` and `training_results/history/` store compact factual digests and review records. |
+| Documentation rules | `docs/document_authoring_principles.md` defines compact, interface-first documentation conventions. |
+| Retrospective tracking | `history_index.json`, `tuning_map.md`, and per-run archives preserve prior decisions and refuted directions. |
 
-- The GPT/Codex role split is visible across `docs/`, `.agents/skills/`, and
-  `training_results/`.
+## Suggested Reading Order
 
-Prompt engineering:
-
-- `docs/gpt_to_codex_prompting.md` defines concise task shells, fixed fields,
-  and validation lines.
-
-Codex task packaging:
-
-- `.agents/skills/` turns repeated operations into explicit execution
-  contracts.
-
-Structured task decomposition:
-
-- Factual extraction, GPT review, archive landing, history indexing, and
-  tuning-map sync are separated.
-
-Training analysis documentation:
-
-- `training_results/current/` and `training_results/history/` store compact
-  evidence digests and review records.
-
-Engineering collaboration:
-
-- GPT owns interpretation; Codex owns bounded writes, validation, and
-  preservation.
-
-Technical documentation organization:
-
-- `docs/document_authoring_principles.md` defines compact, interface-first
-  documentation rules.
-
-Result archiving and retrospective review:
-
-- `history_index.json`, `tuning_map.md`, and per-run archives preserve prior
-  decisions and refuted directions.
-
-## How To Review This Repository
-
-For a fast review, read these files in order:
+To understand the repository flow, read these files in order:
 
 1. `README.md`
 2. `docs/gpt_to_codex_prompting.md`
